@@ -49,7 +49,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
-              <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+              <li class="nav-item active"><a class="nav-link" href="/">Trang chủ</a></li>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Shop</a>
@@ -112,12 +112,11 @@
 						<div class="row single-slide align-items-center d-flex">
 							<div class="col-lg-5 col-md-6">
 								<div class="banner-content">
-									<h1>Nike New <br>Collection!</h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+									<h1>{{newProduct}}</h1>
+									<p>{{newProductContent}}</p>
 									<div class="add-bag d-flex align-items-center">
-										<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-										<span class="add-text text-uppercase">Add to Bag</span>
+										<a class="add-btn" href="#"><span class="lnr lnr-cross"></span></a>
+										<span class="add-text text-uppercase">Mua ngay</span>
 									</div>
 								</div>
 							</div>
@@ -250,7 +249,7 @@
   <script src="/javascripts/jquery.nice-select.min.js"></script>
   <script src="/javascripts/jquery.sticky.js"></script>
   <script src="/javascripts/nouislider.min.js"></script>
-  <script src="/javascripts/countdown.js"></script>
+  {{!-- <script src="/javascripts/countdown.js"></script> --}}
   <script src="/javascripts/jquery.magnific-popup.min.js"></script>
   <script src="/javascripts/owl.carousel.min.js"></script>
   <!--gmaps Js-->
