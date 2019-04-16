@@ -17,7 +17,28 @@ router.get('/', function (req, res, next) {
       image: '/images/xiaomi.jpg',
       name: 'Xiaomi',
       delay: 300,
-    }]
+    }],
+    hotItems: [{
+      name: 'iPhone XS Max 64 GB',
+      image: '/images/iphoneXSMax.png',
+      price: '23.490.000'
+    }, {
+      name: 'Samsung Galaxy S9',
+      image: '/images/galaxyS9.png',
+      price: '17.890.000'
+    }, {
+      name: 'iPhone X 64 GB',
+      image: '/images/apple.png',
+      price: '21.000.000'
+    }, {
+      name: 'Oppo F11 Pro',
+      image: '/images/oppof11pro.png',
+      price: '8.490.000'
+    }, {
+      name: 'Xiaomi Redmi Note 7',
+      image: '/images/xiaomi.jpg',
+      price: '4.090.000'
+    }],
   });
 });
 
