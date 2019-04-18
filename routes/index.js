@@ -46,4 +46,8 @@ router.get('/login', (req, res) => {
   res.render('authen/login', {title: 'Đăng nhập'})
 });
 
+router.get('/recover', (req, res) => {
+  res.render('authen/recover', {title: 'Quên mật khẩu'})
+});
+
 module.exports = router;
