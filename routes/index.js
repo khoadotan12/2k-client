@@ -42,4 +42,8 @@ router.get('/', function (req, res, next) {
   });
 });
 
+router.get('/login', (req, res) => {
+  res.render('authen/login', {title: 'Đăng nhập'})
+});
+
 module.exports = router;
