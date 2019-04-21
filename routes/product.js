@@ -109,4 +109,19 @@ router.get('/:category/:id', (req, res, next) => {
     res.render('product/info', { title: data.name, data })
 });
 
+router.get('/search', (req, res, next) => {
+    const brands = ['Apple', 'Samsung', 'Xiaomi', 'Oppo'];
+    const ram = ['8 GB',
+        '6 GB',
+        '4 GB',
+        '2 GB',
+    ];
+    const data = {
+
+    }
+    data.brands = brands;
+    data.ram = ram;
+    res.render('product/search', { title: 'Tìm kiếm', data });
+});
+
 module.exports = router
