@@ -77,15 +77,17 @@
                 <div class="nonloop-block-3 owl-carousel">
                     {{#each hotItems}}
                     <div class="item">
-                        <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src={{this.image}} alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">{{this.name}}</a></h3>
-                                <p class="text-primary font-weight-bold">{{this.price}} đ</p>
+                        <a href="/product{{this.uri}}">
+                            <div class="block-4 text-center">
+                                <figure class="block-4-image">
+                                    <img src={{this.image}} alt="Image placeholder" class="img-fluid">
+                                </figure>
+                                <div class="block-4-text p-4">
+                                    <h3>{{this.name}}</h3>
+                                    <p class="text-primary font-weight-bold">{{this.price}} đ</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     {{/each}}
                 </div>

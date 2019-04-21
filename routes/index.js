@@ -21,22 +21,27 @@ router.get('/', function (req, res, next) {
     hotItems: [{
       name: 'iPhone XS Max 64 GB',
       image: '/images/iphoneXSMax.png',
-      price: '23.490.000'
+      price: '23.490.000',
+      uri: '/apple/1',
     }, {
       name: 'Samsung Galaxy S9',
       image: '/images/galaxyS9.png',
-      price: '17.890.000'
+      price: '17.890.000',
+      uri: '/samsung/2',
     }, {
       name: 'iPhone X 64 GB',
       image: '/images/apple.png',
+      uri: '/apple/2',
       price: '21.000.000'
     }, {
       name: 'Oppo F11 Pro',
       image: '/images/oppof11pro.png',
+      uri: '/oppo/3',
       price: '8.490.000'
     }, {
       name: 'Xiaomi Redmi Note 7',
       image: '/images/xiaomi.jpg',
+      uri: '/xiaomi/1',
       price: '4.090.000'
     }],
   });
