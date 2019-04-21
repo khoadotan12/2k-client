@@ -12,10 +12,10 @@ router.get('/:category/:id', (req, res, next) => {
             screen: '6.5 inches',
             ram: '4 GB',
             rom: '64 GB',
-            frontCamera: '7 MP',
+            frontCamera: '7MP, f / 2.2, 32mm',
             backCamera: '12 MP',
             os: 'iOS 12',
-            sim: '2',
+            sim: '1',
             pin: '3174 mAh'
         }
     }
