@@ -2,6 +2,26 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', (req, res, next) => {
+    const ram = [
+        {
+            size: '8 GB',
+            count: '19',
+        }, {
+            size: '6 GB',
+            count: '22',
+        }, {
+            size: '4 GB',
+            count: '71',
+        }, {
+            size: '2 GB',
+            count: '61',
+        }];
+    const color = {
+        black: '41',
+        yellow: '10',
+        blue: '30',
+        red: '22',
+    }
     const data = {
         brands: [{
             name: 'samsung',
@@ -21,6 +41,12 @@ router.get('/', (req, res, next) => {
             uri: 'apple/2',
         }, {
             image: '/images/iphoneXSMax.png',
+            name: 'Apple iPhone XS Max 128 GB',
+            info: 'Hàng chính hãng',
+            price: '30,790,000',
+            uri: 'apple/6',
+        }, {
+            image: '/images/iphoneXSMax.png',
             name: 'Apple iPhone XS Max 64 GB',
             info: 'Hàng chính hãng',
             price: '28,790,000',
@@ -37,8 +63,28 @@ router.get('/', (req, res, next) => {
             info: 'Hàng chính hãng',
             price: '21,390,000',
             uri: 'samsung/4',
+        }, {
+            image: '/images/oppof11pro.png',
+            name: 'Oppo F11 Pro',
+            info: 'Hàng chính hãng',
+            price: '12,390,000',
+            uri: 'oppo/1',
+        }, {
+            image: '/images/samsung.png',
+            name: 'Samsung Galaxy S10+',
+            info: 'Hàng nhập khẩu',
+            price: '17,990,000',
+            uri: 'samsung/5',
+        }, {
+            image: '/images/xiaomi.jpg',
+            name: 'Xiaomi Redmi Note 7',
+            info: 'Hàng chính hãng',
+            price: '8,390,000',
+            uri: 'xiaomi/1',
         }]
     };
+    data.ram = ram;
+    data.color = color;
     res.render('product/all', { title: 'Cửa hàng', data });
 });
 

@@ -1,8 +1,8 @@
 <div class="bg-light py-3">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong
-                    class="text-black">Shop</strong></div>
+            <div class="col-md-12 mb-0"><a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong
+                    class="text-black">{{title}}</strong></div>
         </div>
     </div>
 </div>
@@ -27,20 +27,21 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                     {{#each data.brands}}
-                                    <a class="dropdown-item text-capitalize" href="{{this.name}}">{{this.name}}</a>
+                                    <a class="dropdown-item text-capitalize"
+                                        href="/product/{{this.name}}">{{this.name}}</a>
                                     {{/each}}
                                 </div>
                             </div>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                    id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
+                                    id="dropdownMenuReference" data-toggle="dropdown">Sắp xếp</button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                    <a class="dropdown-item" href="#">Relevance</a>
-                                    <a class="dropdown-item" href="#">Name, A to Z</a>
-                                    <a class="dropdown-item" href="#">Name, Z to A</a>
+                                    <a class="dropdown-item" href="#">Bán chạy</a>
+                                    <a class="dropdown-item" href="#">Tên sản phẩm, tăng dần</a>
+                                    <a class="dropdown-item" href="#">Tên sản phẩm, giảm dần</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Price, low to high</a>
-                                    <a class="dropdown-item" href="#">Price, high to low</a>
+                                    <a class="dropdown-item" href="#">Giá, thấp đến cao</a>
+                                    <a class="dropdown-item" href="#">Giá, cao đến thấp</a>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +53,7 @@
                         <div class="block-4 text-center border">
                             <figure class="block-4-image">
                                 <a href="/product/{{this.uri}}"><img src="{{this.image}}" alt="Image placeholder"
-                                    class="img-fluid"></a>
+                                        class="img-fluid"></a>
                             </figure>
                             <div class="block-4-text p-4">
                                 <h3><a href="/product/{{this.uri}}">{{this.name}}</a></h3>
@@ -87,7 +88,7 @@
                     <h3 class="mb-3 h6 text-uppercase text-black d-block">Thương hiệu</h3>
                     <ul class="list-unstyled mb-0">
                         {{#each data.brands}}
-                        <li class="mb-1"><a href="./{{this.name}}"
+                        <li class="mb-1"><a href="/product/{{this.name}}"
                                 class="d-flex text-capitalize"><span>{{this.name}}</span> <span
                                     class="text-black ml-auto">({{this.count}})</span></a></li>
                         {{/each}}
@@ -103,38 +104,33 @@
                     </div>
 
                     <div class="mb-4">
-                        <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
-                        <label for="s_sm" class="d-flex">
-                            <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Small
-                                (2,319)</span>
+                        <h3 class="mb-3 h6 text-uppercase text-black d-block">Dung lượng RAM</h3>
+                        {{#each data.ram}}
+                        <label for="{{this.size}}" class="d-flex">
+                            <input type="radio" name="ram" id="{{this.size}}" class="mr-2 mt-1"> <span
+                                class="text-black">{{this.size}}
+                                ({{this.count}})</span>
                         </label>
-                        <label for="s_md" class="d-flex">
-                            <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Medium
-                                (1,282)</span>
-                        </label>
-                        <label for="s_lg" class="d-flex">
-                            <input type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">Large
-                                (1,392)</span>
-                        </label>
+                        {{/each}}
                     </div>
 
                     <div class="mb-4">
-                        <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
+                        <h3 class="mb-3 h6 text-uppercase text-black d-block">Màu sắc</h3>
                         <a href="#" class="d-flex color-item align-items-center">
-                            <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span
-                                class="text-black">Red (2,429)</span>
+                            <span class="bg-dark color d-inline-block rounded-circle mr-2"></span> <span
+                                class="text-black">Đen ({{data.color.black}})</span>
                         </a>
                         <a href="#" class="d-flex color-item align-items-center">
-                            <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span
-                                class="text-black">Green (2,298)</span>
+                            <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span
+                                class="text-black">Đỏ ({{data.color.red}})</span>
                         </a>
                         <a href="#" class="d-flex color-item align-items-center">
                             <span class="bg-info color d-inline-block rounded-circle mr-2"></span> <span
-                                class="text-black">Blue (1,075)</span>
+                                class="text-black">Xanh dương ({{data.color.blue}})</span>
                         </a>
                         <a href="#" class="d-flex color-item align-items-center">
-                            <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span
-                                class="text-black">Purple (1,075)</span>
+                            <span class="bg-warning color d-inline-block rounded-circle mr-2"></span> <span
+                                class="text-black">Vàng ({{data.color.yellow}})</span>
                         </a>
                     </div>
 
