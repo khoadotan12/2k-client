@@ -21,7 +21,7 @@ router.get('/', (req, res, next) => {
         element.total = formatPrice(price[index] * element.count);
         sum += (price[index] * element.count);
     });
-    res.render('cart', { title: 'Giỏ hàng', data, sum: formatPrice(sum) })
+    res.render('cart/index', { title: 'Giỏ hàng', data, sum: formatPrice(sum) })
 });
 
 module.exports = router
