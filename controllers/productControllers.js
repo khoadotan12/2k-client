@@ -1,3 +1,19 @@
+const productModel = require('../models/product');
+
+function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function parseData(raw) {
+    const data = { ...raw._doc };
+    data.price = formatPrice(data.price);
+    console.log(data);
+    data.info.sim = data.info.sim.toString();
+    data.info.RAM = data.info.RAM.toString() + ' GB';
+    data.info.ROM = data.info.ROM.toString() + ' GB';
+    data.info.PIN = data.info.PIN.toString() + ' mAh';
+    return data;
+}
 exports.home = (req, res, next) => {
     const ram = [
         {
@@ -85,24 +101,9 @@ exports.home = (req, res, next) => {
     res.render('product/all', { title: 'Cửa hàng', data });
 };
 
-exports.info = (req, res, next) => {
-    const data = {
-        name: 'iPhone XS Max 64 GB',
-        brand: 'Apple',
-        price: '28,790,000',
-        color: ['Bạc', 'Vàng', 'Xám'],
-        shortInfo: ['Hệ điều hành: iOS 12', 'RAM: 4 GB', 'ROM: 64 GB', 'Chip xử lý: A12 Bionic 64-bit 7nm'],
-        info: {
-            screen: '6.5 inches',
-            ram: '4 GB',
-            rom: '64 GB',
-            frontCamera: '7 MP, f / 2.2, 32mm',
-            backCamera: '12 MP',
-            os: 'iOS 12',
-            sim: '1',
-            pin: '3174 mAh'
-        }
-    }
+exports.info = async (req, res, next) => {
+    const rawdata = await productModel.info('5cd037d807ee27035d79c9c7');
+    const data = parseData(rawdata);
     res.render('product/info', { title: data.name, data })
 };
 
