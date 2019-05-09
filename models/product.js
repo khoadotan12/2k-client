@@ -10,7 +10,7 @@ const ProductSchema = new Schema({
     color: [String],
     info: {
         RAM: Number,
-        CPU : String,
+        CPU: String,
         ROM: Number,
         OS: String,
         Screen: Number,
@@ -22,5 +22,10 @@ const ProductSchema = new Schema({
 
 exports.info = async (id) => {
     const productModel = mongoose.model('products', ProductSchema);
-    return await productModel.findById(id);
+    try {
+        const model = await productModel.findById(id);
+        return model;
+    } catch(e) {
+        return null;
+    }
 }

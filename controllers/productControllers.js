@@ -1,5 +1,5 @@
 const productModel = require('../models/product');
-
+const createError = require('http-errors');
 function formatPrice(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -102,8 +102,10 @@ exports.home = (req, res, next) => {
 };
 
 exports.info = async (req, res, next) => {
-    const rawdata = await productModel.info('5cd037d807ee27035d79c9c7');
-    const data = parseData(rawdata);
+    const rawdata = await productModel.info('aa');
+    if (!rawdata)
+        return next(createError(404));
+    // const data = parseData(rawdata);
     res.render('product/info', { title: data.name, data })
 };
 
