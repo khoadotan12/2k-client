@@ -40,11 +40,11 @@ exports.getList = async (page) => {
     try {
         const products = await productModel.find();
         pageProducts = products.slice((page - 1) * 10, page * 10);
-        pageProducts.forEach(async (product) => {
+        pageProducts.map(async (product) => {
             const brand = await brandModel.query(product.brand);
-            product._doc.brand = brand ? brand.name : 'Hãng khác';
-            return product;
+            product.brand = brand ? brand.name : 'Hãng khác';
         });
+        console.log(pageProducts);
         return pageProducts;
     } catch (e) {
         console.log(e);
