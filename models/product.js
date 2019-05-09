@@ -1,4 +1,6 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const brandModel = require('./brand');
+
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -24,8 +26,12 @@ exports.info = async (id) => {
     const productModel = mongoose.model('products', ProductSchema);
     try {
         const model = await productModel.findById(id);
+        const brand = await brandModel.query(model.brand);
+        model._doc.brand = brand ? brand.name : 'Hãng khác'
+        console.log(brand);
         return model;
-    } catch(e) {
+    } catch (e) {
+        console.log(e);
         return null;
     }
 };

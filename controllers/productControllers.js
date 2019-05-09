@@ -5,11 +5,11 @@ const { formatPrice } = require('../global');
 function parseData(raw) {
     const data = { ...raw._doc };
     data.price = formatPrice(data.price);
-    console.log(data);
     data.info.sim = data.info.sim.toString();
     data.info.RAM = data.info.RAM.toString() + ' GB';
     data.info.ROM = data.info.ROM.toString() + ' GB';
     data.info.PIN = data.info.PIN.toString() + ' mAh';
+    data.info.Screen = data.info.Screen.toString() + ' inches';
     return data;
 }
 exports.home = (req, res, next) => {
