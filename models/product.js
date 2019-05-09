@@ -18,7 +18,7 @@ const ProductSchema = new Schema({
         frontCamera: String,
         backCamera: String,
     }
-})
+});
 
 exports.info = async (id) => {
     const productModel = mongoose.model('products', ProductSchema);
@@ -28,4 +28,4 @@ exports.info = async (id) => {
     } catch(e) {
         return null;
     }
-}
+};
