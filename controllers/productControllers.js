@@ -10,9 +10,15 @@ function parseData(raw) {
     data.info.ROM = data.info.ROM.toString() + ' GB';
     data.info.PIN = data.info.PIN.toString() + ' mAh';
     data.info.Screen = data.info.Screen.toString() + ' inches';
+    let shortInfo = [];
+    shortInfo.push('Hệ điều hành: ' + data.info.OS);
+    shortInfo.push('RAM: ' + data.info.RAM);
+    shortInfo.push('ROM: ' + data.info.ROM);
+    shortInfo.push('Chip xử lý: ' + data.info.CPU);
+    data.shortInfo = [...shortInfo];
     return data;
 }
-exports.home = (req, res, next) => {
+exports.home = async (req, res, next) => {
     const ram = [
         {
             size: '8 GB',
@@ -94,6 +100,10 @@ exports.home = (req, res, next) => {
             uri: 'xiaomi/1',
         }]
     };
+    const rawdata = await productModel.getList(1);
+    data.items = rawdata.map(item => {
+        return parseData(item);
+    });
     data.ram = ram;
     data.color = color;
     res.render('product/all', { title: 'Cửa hàng', data });

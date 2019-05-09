@@ -9,6 +9,7 @@ const ProductSchema = new Schema({
     name: String,
     price: Number,
     image: String,
+    type: String,
     color: [String],
     info: {
         RAM: Number,
@@ -21,17 +22,32 @@ const ProductSchema = new Schema({
         backCamera: String,
     }
 });
+const productModel = mongoose.model('products', ProductSchema);
 
 exports.info = async (id) => {
-    const productModel = mongoose.model('products', ProductSchema);
     try {
         const model = await productModel.findById(id);
         const brand = await brandModel.query(model.brand);
         model._doc.brand = brand ? brand.name : 'Hãng khác'
-        console.log(brand);
         return model;
     } catch (e) {
         console.log(e);
         return null;
     }
 };
+
+exports.getList = async (page) => {
+    try {
+        const products = await productModel.find();
+        pageProducts = products.slice((page - 1) * 10, page * 10);
+        pageProducts.forEach(async (product) => {
+            const brand = await brandModel.query(product.brand);
+            product._doc.brand = brand ? brand.name : 'Hãng khác';
+            return product;
+        });
+        return pageProducts;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
