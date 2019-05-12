@@ -1,10 +1,9 @@
-var mongoose = require('mongoose');
-
+const mongoose = require('mongoose');
+const config = require('./config');
 
 exports.connectDB = () => {
-    const PROD_URI = "mongodb://localhost:27017/mobileShop";
 
-    mongoose.connect(PROD_URI, { useNewUrlParser: true });
+    mongoose.connect(config.cloud, { useNewUrlParser: true });
 
     var db = mongoose.connection;
 
