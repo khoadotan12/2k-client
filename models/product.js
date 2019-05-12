@@ -27,9 +27,10 @@ const productModel = mongoose.model('products', ProductSchema);
 exports.info = async (id) => {
     try {
         const model = await productModel.findById(id);
-        const brand = await brandModel.query(model.brand);
-        model._doc.brand = brand ? brand.name : 'Hãng khác'
-        return model;
+        const result = model._doc;
+        const brand = await brandModel.query(result.brand);
+        result.brand = brand ? brand.name : 'Hãng khác';
+        return result;
     } catch (e) {
         console.log(e);
         return null;
@@ -40,12 +41,12 @@ exports.getList = async (page) => {
     try {
         const products = await productModel.find();
         pageProducts = products.slice((page - 1) * 10, page * 10);
-        pageProducts.map(async (product) => {
+        const result = pageProducts.map(async (product) => {
             const brand = await brandModel.query(product.brand);
-            product.brand = brand ? brand.name : 'Hãng khác';
+            product._doc.brand = brand ? brand.name : 'Hãng khác';
+            return product._doc;
         });
-        console.log(pageProducts);
-        return pageProducts;
+        return await Promise.all(result);
     } catch (e) {
         console.log(e);
         return null;

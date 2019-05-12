@@ -1,9 +1,11 @@
 const productModel = require('../models/product');
+const brandModel = require('../models/brand');
+
 const createError = require('http-errors');
 const { formatPrice } = require('../global');
 
 function parseData(raw) {
-    const data = { ...raw._doc };
+    const data = { ...raw };
     data.price = formatPrice(data.price);
     data.info.sim = data.info.sim.toString();
     data.info.RAM = data.info.RAM.toString() + ' GB';
@@ -39,71 +41,13 @@ exports.home = async (req, res, next) => {
         blue: '30',
         red: '22',
     }
-    const data = {
-        brands: [{
-            name: 'samsung',
-            count: '162',
-        }, {
-            name: 'apple',
-            count: '33',
-        }, {
-            name: 'xiaomi',
-            count: '190'
-        }],
-        items: [{
-            image: '/images/apple.png',
-            name: 'Apple iPhone X 64 GB',
-            info: 'Hàng chính hãng',
-            price: '20,790,000',
-            uri: 'apple/2',
-        }, {
-            image: '/images/iphoneXSMax.png',
-            name: 'Apple iPhone XS Max 128 GB',
-            info: 'Hàng chính hãng',
-            price: '30,790,000',
-            uri: 'apple/6',
-        }, {
-            image: '/images/iphoneXSMax.png',
-            name: 'Apple iPhone XS Max 64 GB',
-            info: 'Hàng chính hãng',
-            price: '28,790,000',
-            uri: 'apple/1',
-        }, {
-            image: '/images/iphoneXSMax.png',
-            name: 'Apple iPhone XS Max 64 GB',
-            info: 'Hàng nhập khẩu',
-            price: '25,290,000',
-            uri: 'apple/3',
-        }, {
-            image: '/images/samsung.png',
-            name: 'Samsung Galaxy S10+',
-            info: 'Hàng chính hãng',
-            price: '21,390,000',
-            uri: 'samsung/4',
-        }, {
-            image: '/images/oppof11pro.png',
-            name: 'Oppo F11 Pro',
-            info: 'Hàng chính hãng',
-            price: '12,390,000',
-            uri: 'oppo/1',
-        }, {
-            image: '/images/samsung.png',
-            name: 'Samsung Galaxy S10+',
-            info: 'Hàng nhập khẩu',
-            price: '17,990,000',
-            uri: 'samsung/5',
-        }, {
-            image: '/images/xiaomi.jpg',
-            name: 'Xiaomi Redmi Note 7',
-            info: 'Hàng chính hãng',
-            price: '8,390,000',
-            uri: 'xiaomi/1',
-        }]
-    };
-    const rawdata = await productModel.getList(1);
-    data.items = rawdata.map(item => {
+    const data = {};
+    const rawlist = await productModel.getList(1);
+    const brands = await brandModel.list();
+    data.brands = brands;
+    data.items = rawlist.map(item => {
         const newitem = parseData(item);
-        newitem.uri = newitem.brand + '/' + newitem._id;
+        newitem.uri = newitem.brand.toLowerCase() + '/' + newitem._id;
         return newitem;
     });
     data.ram = ram;
