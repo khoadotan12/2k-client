@@ -45,11 +45,12 @@ exports.home = async (req, res, next) => {
     const rawlist = await productModel.getList(1);
     const brands = await brandModel.list();
     data.brands = brands;
-    data.items = rawlist.map(item => {
-        const newitem = parseData(item);
-        newitem.uri = newitem.brand.toLowerCase() + '/' + newitem._id;
-        return newitem;
-    });
+    if (rawlist)
+        data.items = rawlist.map(item => {
+            const newitem = parseData(item);
+            newitem.uri = newitem.brand.toLowerCase() + '/' + newitem._id;
+            return newitem;
+        });
     data.ram = ram;
     data.color = color;
     res.render('product/all', { title: 'Cửa hàng', data });
