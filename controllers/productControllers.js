@@ -52,9 +52,14 @@ exports.home = async (req, res, next) => {
             return newitem;
         });
     data.ram = ram;
-    console.log('Data: ', data);
     data.color = color;
     res.render('product/all', { title: 'Cửa hàng', data });
+};
+
+exports.brand = async (req, res, next) => {
+    let brand = req.params.category;
+    brand = brand.charAt(0).toUpperCase() + brand.slice(1);
+    res.render('product/brand', { title: brand });
 };
 
 exports.info = async (req, res, next) => {

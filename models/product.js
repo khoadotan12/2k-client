@@ -25,7 +25,7 @@ const ProductSchema = new Schema({
     }
 });
 const productModel = mongoose.model('products', ProductSchema);
-
+const perPage = 10;
 exports.info = async (id) => {
     try {
         const model = await productModel.findById(id);
@@ -39,15 +39,32 @@ exports.info = async (id) => {
     }
 };
 
-exports.getList = async (page) => {
+exports.getPage = async (page) => {
     try {
-        const products = await productModel.find().skip((page - 1) * 10).limit(10);
+        const products = await productModel.find().skip((page - 1) * perPage).limit(perPage);
         const result = products.map(async (product) => {
             const brand = await brandModel.query(product.brand);
             product._doc.brand = brand ? brand.name : 'Hãng khác';
             return product._doc;
         });
         return await Promise.all(result);
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+exports.getList = async (page) => {
+    try {
+        const allList = productModel.find();
+        const products = await allList.skip((page - 1) * perPage).limit(perPage);
+        const result = Promise.all(products.map(async (product) => {
+            const brand = await brandModel.query(product.brand);
+            product._doc.brand = brand ? brand.name : 'Hãng khác';
+            return product._doc;
+        }));
+        result.total = await allList.count();
+        return result;
     } catch (e) {
         console.log(e);
         return null;

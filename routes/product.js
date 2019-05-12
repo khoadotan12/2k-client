@@ -7,6 +7,8 @@ router.get('/', productControllers.home);
 
 router.get('/:category/:id', productControllers.info);
 
+router.get('/:category', productControllers.brand);
+
 router.get('/search', productControllers.search);
 
 module.exports = router
