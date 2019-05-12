@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const BrandSchema = new Schema({
     name: String,
     count: Number,
+    sold: Number,
     image: String,
 });
 const brandModel = mongoose.model('brands', BrandSchema);
