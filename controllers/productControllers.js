@@ -52,6 +52,7 @@ exports.home = async (req, res, next) => {
             return newitem;
         });
     data.ram = ram;
+    console.log('Data: ', data);
     data.color = color;
     res.render('product/all', { title: 'Cửa hàng', data });
 };

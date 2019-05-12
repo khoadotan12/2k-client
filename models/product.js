@@ -10,6 +10,8 @@ const ProductSchema = new Schema({
     price: Number,
     image: String,
     type: String,
+    stock: Number,
+    sold: Number,
     color: [String],
     info: {
         RAM: Number,
@@ -39,9 +41,23 @@ exports.info = async (id) => {
 
 exports.getList = async (page) => {
     try {
-        const products = await productModel.find();
-        pageProducts = products.slice((page - 1) * 10, page * 10);
-        const result = pageProducts.map(async (product) => {
+        const products = await productModel.find().skip((page - 1) * 10).limit(10);
+        const result = products.map(async (product) => {
+            const brand = await brandModel.query(product.brand);
+            product._doc.brand = brand ? brand.name : 'Hãng khác';
+            return product._doc;
+        });
+        return await Promise.all(result);
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+exports.getHotItems = async () => {
+    try {
+        const products = await productModel.find().sort({ sold: -1 }).limit(10);
+        const result = products.map(async (product) => {
             const brand = await brandModel.query(product.brand);
             product._doc.brand = brand ? brand.name : 'Hãng khác';
             return product._doc;

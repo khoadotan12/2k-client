@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const BrandSchema = new Schema({
     name: String,
     count: Number,
+    image: String,
 });
 const brandModel = mongoose.model('brands', BrandSchema);
 exports.query = async (id) => {
@@ -23,6 +24,17 @@ exports.list = async () => {
         model.forEach(item => {
             item._doc.name = item._doc.name.toLowerCase();
         })
+        return model;
+    }
+    catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+exports.getTopList = async () => {
+    try {
+        const model = await brandModel.find().sort({sold: -1}).limit(3);
         return model;
     }
     catch (e) {
