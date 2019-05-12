@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const brandModel = require('./brand');
-
+const { perPage } = require('../global');
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -25,7 +25,7 @@ const ProductSchema = new Schema({
     }
 });
 const productModel = mongoose.model('products', ProductSchema);
-const perPage = 10;
+
 exports.info = async (id) => {
     try {
         const model = await productModel.findById(id);
@@ -54,16 +54,29 @@ exports.getPage = async (page) => {
     }
 }
 
-exports.getList = async (page) => {
+exports.getCategory = async (name) => {
+    try {
+        const brand = await brandModel.queryByName(name);
+        const products = productModel.find({ brand: brand[0]._id });
+        const result = (await products.limit(perPage)).map(product => product._doc);
+        const total = await products.countDocuments();
+        return { total, data: result };
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+exports.getList = async () => {
     try {
         const allList = productModel.find();
-        const products = await allList.skip((page - 1) * perPage).limit(perPage);
+        const products = await allList.limit(perPage);
         const result = Promise.all(products.map(async (product) => {
             const brand = await brandModel.query(product.brand);
             product._doc.brand = brand ? brand.name : 'Hãng khác';
             return product._doc;
         }));
-        result.total = await allList.count();
+        result.total = await allList.countDocuments();
         return result;
     } catch (e) {
         console.log(e);

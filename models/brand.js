@@ -7,6 +7,18 @@ const BrandSchema = new Schema({
     image: String,
 });
 const brandModel = mongoose.model('brands', BrandSchema);
+
+exports.queryByName = async (name) => {
+    try {
+        const model = await brandModel.find({ name });
+        return model;
+    }
+    catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
 exports.query = async (id) => {
     try {
         const model = await brandModel.findById(id);
@@ -34,7 +46,7 @@ exports.list = async () => {
 
 exports.getTopList = async () => {
     try {
-        const model = await brandModel.find().sort({sold: -1}).limit(3);
+        const model = await brandModel.find().sort({ sold: -1 }).limit(3);
         return model;
     }
     catch (e) {

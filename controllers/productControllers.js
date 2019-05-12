@@ -57,9 +57,39 @@ exports.home = async (req, res, next) => {
 };
 
 exports.brand = async (req, res, next) => {
-    let brand = req.params.category;
-    brand = brand.charAt(0).toUpperCase() + brand.slice(1);
-    res.render('product/brand', { title: brand });
+    let brandName = req.params.category;
+    brandName = brandName.charAt(0).toUpperCase() + brandName.slice(1);
+    const ram = [
+        {
+            size: '8 GB',
+            count: '19',
+        }, {
+            size: '6 GB',
+            count: '22',
+        }, {
+            size: '4 GB',
+            count: '71',
+        }, {
+            size: '2 GB',
+            count: '61',
+        }];
+    const color = {
+        black: '41',
+        yellow: '10',
+        blue: '30',
+        red: '22',
+    }
+    const data = {};
+    const rawlist = await productModel.getCategory(brandName);
+    if (rawlist)
+        data.items = rawlist.data.map(item => {
+            const newitem = parseData(item);
+            newitem.uri = req.params.category + '/' + newitem._id;
+            return newitem;
+        });
+    data.ram = ram;
+    data.color = color;
+    res.render('product/brand', { title: brandName, data });
 };
 
 exports.info = async (req, res, next) => {
