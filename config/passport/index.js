@@ -18,16 +18,18 @@ passport.deserializeUser((id, done) => {
 passport.use(new LocalStrategy(
     {
         usernameField: 'email',
-        passwordField: 'password'
+        passwordField: 'password',
+        passReqToCallback: true
     },
-    (username, password, done) => {
+    (req, username, password, done) => {
         userModel.getEmail(username).then((user) => {
             if (!user)
-                return done(null, null);
+                return done(null, false, req.flash('loginMessage', 'Email hoặc mật khẩu không hợp lệ.'));
             const hash = SHA256(password).toString();
-            if (hash === user.password)
+            if (hash === user.password) {
                 return done(null, user);
-            return done(null, null);
+            }
+            return done(null, false, req.flash('loginMessage', 'Email hoặc mật khẩu không hợp lệ.'));
         }).catch((err) => {
             return done(err);
         })

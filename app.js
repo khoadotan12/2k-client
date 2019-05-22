@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
+const passport = require('./config/passport');
+const flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var cartRouter = require('./routes/cart');
@@ -11,25 +13,28 @@ var checkoutRouter = require('./routes/checkout');
 var userRouter = require('./routes/user');
 var orderRouter = require('./routes/order');
 var productRouter = require('./routes/product');
-const passport = require('./config/passport');
+
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(flash({ unsafe: true }));
 app.use(session({
   secret: 'J50@xz1AP47xc60',
   saveUninitialized: false,
   resave: false,
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/cart', cartRouter);
@@ -38,8 +43,7 @@ app.use('/account', userRouter);
 app.use('/order', orderRouter);
 app.use('/product', productRouter);
 
-app.use(passport.initialize());
-app.use(passport.session());
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

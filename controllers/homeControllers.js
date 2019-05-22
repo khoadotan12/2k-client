@@ -9,7 +9,7 @@ function parseData(raw) {
 exports.home = async (req, res, next) => {
     const data = {
         banner: '/images/banner.jpg',
-        bannerURI: '/product/samsung/5cd43bca675b57068d1b2b8d',        
+        bannerURI: '/product/samsung/5cd43bca675b57068d1b2b8d',
     };
     const rawHotItems = await productModel.getHotItems();
     const rawTopBrands = await brandModel.getTopList();
@@ -33,7 +33,7 @@ exports.home = async (req, res, next) => {
 };
 
 exports.loginGet = (req, res) => {
-    res.render('authen/login', { title: 'Đăng nhập' })
+    res.render('authen/login', { title: 'Đăng nhập', message: req.flash('loginMessage') })
 };
 
 exports.recoverGet = (req, res) => {

@@ -6,7 +6,7 @@ const passport = require('passport');
 /* GET home page. */
 router.get('/', homeControllers.home);
 
-router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' }));
+router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login',  failureFlash: true }));
 
 router.get('/login', homeControllers.loginGet);
 
