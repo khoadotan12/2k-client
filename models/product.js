@@ -12,11 +12,12 @@ const ProductSchema = new Schema({
     type: String,
     stock: Number,
     sold: Number,
-    color: [String],
+    colors: [String],
     info: {
         RAM: Number,
         CPU: String,
         ROM: Number,
+        PIN: Number,
         OS: String,
         Screen: Number,
         sim: Number,
