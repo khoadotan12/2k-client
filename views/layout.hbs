@@ -25,6 +25,7 @@
 <body>
 
   <div class="site-wrap">
+
     <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
         <div class="container">
@@ -50,11 +51,14 @@
                     <li class="has-children active">
                       <span class="icon icon-person"></span>
                       <ul class="dropdown">
+                        {{#if loggedIn}}
+                        <li><a href="/account">Thông tin tài khoản</a></li>
+                        <li><a href="/order">Đơn hàng của bạn</a></li>
+                        {{else}}
                         <li><a href="/login">Đăng nhập</a></li>
                         <li><a href="/register">Đăng ký</a></li>
                         <li><a href="/recover">Quên mật khẩu</a></li>
-                        <li><a href="/account">Thông tin tài khoản</a></li>
-                        <li><a href="/order">Đơn hàng của bạn</a></li>
+                        {{/if}}
                       </ul>
                     </li>
                     {{!-- <li><a href="#"><span class="icon icon-heart-o"></span></a></li> --}}

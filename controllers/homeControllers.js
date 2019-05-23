@@ -1,5 +1,6 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
+const userModel = require('../models/user');
 const { formatPrice } = require('../global');
 function parseData(raw) {
     const data = { ...raw };
@@ -26,9 +27,13 @@ exports.home = async (req, res, next) => {
             newitem.uri = '/' + newitem.brand.toLowerCase() + '/' + newitem._id;
             return newitem;
         });
+    let loggedIn = false;
+    if (req.user)
+        loggedIn = true;
     res.render('index', {
         title: 'Trang chủ',
         data,
+        loggedIn,
     });
 };
 
@@ -43,3 +48,10 @@ exports.recoverGet = (req, res) => {
 exports.registerGet = (req, res) => {
     res.render('authen/register', { title: 'Đăng ký' })
 };
+
+exports.verifyEmail = async (req, res) => {
+    const user = await userModel.getEmail(req.body.email);
+    if (user)
+        return res.send("Email đã được sử dụng.");
+    return res.status(200).send();
+}

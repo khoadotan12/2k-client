@@ -199,5 +199,24 @@ jQuery(document).ready(function ($) {
 	};
 	siteMagnificPopup();
 
-
 });
+
+function validateEmail() {
+	const email = document.getElementById("email").value;
+	const URL = window.location.origin;
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				document.getElementById("validateEmailFail").textContent = xhr.responseText;
+				if (xhr.responseText !== "")
+					document.getElementById("registerButton").disabled = true;
+				else
+					document.getElementById("registerButton").disabled = false;
+			}
+		}
+	};
+	xhr.open("POST", URL + "/register/verifyEmail", true);
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(JSON.stringify({ "email": email }));
+}
