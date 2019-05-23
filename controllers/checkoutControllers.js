@@ -20,7 +20,7 @@ exports.home = (req, res, next) => {
         element.total = formatPrice(price[index] * element.count);
         sum += (price[index] * element.count);
     });
-    res.render('checkout/index', { title: 'Thanh toán', data, sum: formatPrice(sum) })
+    res.render('checkout/index', { title: 'Thanh toán', data, sum: formatPrice(sum), user: req.user })
 };
 
 exports.done = (req, res, next) => {

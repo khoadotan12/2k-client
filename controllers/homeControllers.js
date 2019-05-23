@@ -27,13 +27,10 @@ exports.home = async (req, res, next) => {
             newitem.uri = '/' + newitem.brand.toLowerCase() + '/' + newitem._id;
             return newitem;
         });
-    let loggedIn = false;
-    if (req.user)
-        loggedIn = true;
     res.render('index', {
         title: 'Trang chủ',
         data,
-        loggedIn,
+        user: req.user,
     });
 };
 

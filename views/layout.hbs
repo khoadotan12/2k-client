@@ -51,9 +51,9 @@
                     <li class="has-children active">
                       <span class="icon icon-person"></span>
                       <ul class="dropdown">
-                        {{#if loggedIn}}
+                        {{#if user}}
                         <li><a href="/account">Thông tin tài khoản</a></li>
-                        <li><a href="/order">Đơn hàng của bạn</a></li>
+                        <li><a href="/changepassword">Đổi mật khẩu</a></li>
                         <li><a href="/logout">Đăng xuất</a></li>
                         {{else}}
                         <li><a href="/login">Đăng nhập</a></li>
@@ -86,6 +86,9 @@
               <a href="/">Trang chủ</a>
             </li>
             <li><a href="/product">Cửa hàng</a></li>
+            {{#if user}}
+            <li><a href="/order">Đơn hàng của bạn</a></li>
+            {{/if}}
           </ul>
         </div>
       </nav>
