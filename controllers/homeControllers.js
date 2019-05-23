@@ -55,3 +55,10 @@ exports.verifyEmail = async (req, res) => {
         return res.send("Email đã được sử dụng.");
     return res.status(200).send();
 }
+
+exports.logout = (req, res) => {
+    req.session.destroy();
+    req.logout();
+    res.clearCookie('connect.sid');
+    res.redirect('/');
+}

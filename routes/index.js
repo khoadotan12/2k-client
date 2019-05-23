@@ -16,6 +16,8 @@ router.get('/register', homeControllers.registerGet);
 
 router.post('/register/verifyEmail', homeControllers.verifyEmail);
 
+router.get('/logout', homeControllers.logout);
+
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
