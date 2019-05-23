@@ -26,8 +26,7 @@
                                     Mới nhất
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                    <a class="dropdown-item"
-                                        href="#">Bán chạy</a>
+                                    <a class="dropdown-item" href="#">Bán chạy</a>
                                 </div>
                             </div>
                             <div class="btn-group">
@@ -71,13 +70,13 @@
                     <div class="col-md-12 text-center">
                         <div class="site-block-27">
                             <ul>
-                                <li><a href="#">&lt;</a></li>
-                                <li class="active"><span>1</span></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">&gt;</a></li>
+                                {{#for data.firstPage data.lastPage}}
+                                {{#ifCond ../data.page this}}
+                                <li class="active"><span>{{this}}</span></li>
+                                {{else}}
+                                <li><a href="/product/{{this}}">{{this}}</a></li>
+                                {{/ifCond}}
+                                {{/for}}                                
                             </ul>
                         </div>
                     </div>

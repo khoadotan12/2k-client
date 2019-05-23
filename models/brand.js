@@ -34,9 +34,6 @@ exports.query = async (id) => {
 exports.list = async () => {
     try {
         const model = await brandModel.find();
-        model.forEach(item => {
-            item._doc.name = item._doc.name.toLowerCase();
-        })
         return model;
     }
     catch (e) {

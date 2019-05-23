@@ -43,12 +43,13 @@ exports.info = async (id) => {
 exports.getPage = async (page) => {
     try {
         const products = await productModel.find().skip((page - 1) * perPage).limit(perPage);
-        const result = products.map(async (product) => {
-            const brand = await brandModel.query(product.brand);
-            product._doc.brand = brand ? brand.name : 'Hãng khác';
-            return product._doc;
-        });
-        return await Promise.all(result);
+        // const result = products.map(async (product) => {
+        //     const brand = await brandModel.query(product.brand);
+        //     product._doc.brand = brand ? brand.name : 'Hãng khác';
+        //     return product._doc;
+        // });
+        // return await Promise.all(result);
+        return products;
     } catch (e) {
         console.log(e);
         return null;

@@ -1,6 +1,6 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
-
+const { perPage } = require('../global');
 const createError = require('http-errors');
 const { formatPrice } = require('../global');
 
@@ -42,15 +42,39 @@ exports.home = async (req, res, next) => {
         red: '22',
     }
     const data = {};
-    const rawlist = await productModel.getList(1);
+    const page = req.params.page ? parseInt(req.params.page) : 1;
+    const rawlist = await productModel.getPage(page);
     const brands = await brandModel.list();
     data.brands = brands;
-    if (rawlist)
+    let total = 0;
+    brands.forEach(item => total += item.count);
+    const totalPage = Math.ceil(total / perPage);
+    if (page > totalPage)
+        return next(createError(404));
+    if (rawlist) {
         data.items = rawlist.map(item => {
-            const newitem = parseData(item);
+            const newitem = parseData(item._doc);
+            const found = brands.find((element) => {
+                return newitem.brand.toString() === element._id.toString();
+            });
+            newitem.brand = found.name;
             newitem.uri = newitem.brand.toLowerCase() + '/' + newitem._id;
             return newitem;
         });
+        data.lastPage = page + 2 <= totalPage ? page + 2 : totalPage;
+        data.firstPage = page + 2 <= totalPage ? page - 2 : page - 4 + (totalPage - page);
+        data.firstPage = data.firstPage < 1 ? 1 : data.firstPage;
+        if (data.lastPage < 5)
+            if (totalPage >= 5)
+                data.lastPage = 5;
+            else if (totalPage >= 4)
+                data.lastPage = 4;
+        data.page = page;
+        console.log(data);
+    }
+    else {
+        return next(createError(404));
+    }
     data.ram = ram;
     data.color = color;
     res.render('product/all', { title: 'Cửa hàng', data });
