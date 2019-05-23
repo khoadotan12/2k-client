@@ -30,10 +30,7 @@ const productModel = mongoose.model('products', ProductSchema);
 exports.info = async (id) => {
     try {
         const model = await productModel.findById(id);
-        const result = model._doc;
-        const brand = await brandModel.query(result.brand);
-        result.brand = brand ? brand.name : 'Hãng khác';
-        return result;
+        return model._doc;
     } catch (e) {
         console.log(e);
         return null;
@@ -59,10 +56,13 @@ exports.getPage = async (page) => {
 exports.getCategory = async (name) => {
     try {
         const brand = await brandModel.queryByName(name);
-        const products = productModel.find({ brand: brand[0]._id });
-        const result = (await products.limit(perPage)).map(product => product._doc);
-        const total = await products.countDocuments();
-        return { total, data: result };
+        const products = productModel.find({ brand: brand._id });
+        const result = await products.limit(10);
+        if (result) {
+            const total = await products.countDocuments();
+            return { total, data: result};
+        }
+        return null;
     } catch (e) {
         console.log(e);
         return null;
@@ -95,6 +95,15 @@ exports.getHotItems = async () => {
             return product._doc;
         });
         return await Promise.all(result);
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+exports.getRelatedProducts = async (brand, id) => {
+    try {
+        return await productModel.find({ brand }).where('_id').ne(id).limit(10);
     } catch (e) {
         console.log(e);
         return null;

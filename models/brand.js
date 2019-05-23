@@ -11,7 +11,7 @@ const brandModel = mongoose.model('brands', BrandSchema);
 
 exports.queryByName = async (name) => {
     try {
-        const model = await brandModel.find({ name });
+        const model = await brandModel.findOne({ name });
         return model;
     }
     catch (e) {

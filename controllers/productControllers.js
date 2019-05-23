@@ -45,7 +45,10 @@ exports.home = async (req, res, next) => {
     const page = req.params.page ? parseInt(req.params.page) : 1;
     const rawlist = await productModel.getPage(page);
     const brands = await brandModel.list();
-    data.brands = brands;
+    data.brands = brands.map(item => {
+        item._doc.name = item._doc.name.toLowerCase();
+        return item._doc;
+    });
     let total = 0;
     brands.forEach(item => total += item.count);
     const totalPage = Math.ceil(total / perPage);
@@ -70,7 +73,6 @@ exports.home = async (req, res, next) => {
             else if (totalPage >= 4)
                 data.lastPage = 4;
         data.page = page;
-        console.log(data);
     }
     else {
         return next(createError(404));
@@ -107,7 +109,7 @@ exports.brand = async (req, res, next) => {
     const rawlist = await productModel.getCategory(brandName);
     if (rawlist)
         data.items = rawlist.data.map(item => {
-            const newitem = parseData(item);
+            const newitem = parseData(item._doc);
             newitem.uri = req.params.category + '/' + newitem._id;
             return newitem;
         });
@@ -120,7 +122,18 @@ exports.info = async (req, res, next) => {
     const rawdata = await productModel.info(req.params.id);
     if (!rawdata)
         return next(createError(404));
+    const brand = await brandModel.query(rawdata.brand);
+    rawdata.brand = brand ? brand.name : 'Hãng khác';
     const data = parseData(rawdata);
+
+    const related = await productModel.getRelatedProducts(brand._id, req.params.id);
+    if (related)
+        data.related = related.map(item => {
+            const newitem = parseData(item._doc);
+            newitem.uri = newitem._id;
+            return newitem;
+        });
+    console.log(data);
     res.render('product/info', { title: data.name, data })
 };
 

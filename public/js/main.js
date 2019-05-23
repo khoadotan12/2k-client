@@ -225,13 +225,22 @@ function checkPassword() {
 	const password = document.getElementById("password").value;
 	const repassword = document.getElementById("re_password").value;
 	if (password !== "" && repassword != "") {
-		if (password !== repassword) {
-			document.getElementById("validatePasswordFail").textContent = "Xác nhận mật khẩu không chính xác.";
+		if (password.length < 6) {
+			document.getElementById("validatePasswordFail").textContent = "Mật khẩu phải có ít nhất 6 ký tự.";
 			document.getElementById("registerButton").disabled = true;
 		}
 		else {
-			document.getElementById("validatePasswordFail").textContent = "";
-			document.getElementById("registerButton").disabled = false;
+			if (password !== repassword) {
+				document.getElementById("validatePasswordFail").textContent = "Xác nhận mật khẩu không chính xác.";
+				document.getElementById("registerButton").disabled = true;
+			}
+			else {
+				document.getElementById("validatePasswordFail").textContent = "";
+				document.getElementById("registerButton").disabled = false;
+			}
 		}
+	}
+	else {
+		document.getElementById("validatePasswordFail").textContent = "";
 	}
 }
