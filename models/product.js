@@ -32,7 +32,6 @@ exports.info = async (id) => {
         const model = await productModel.findById(id);
         return model._doc;
     } catch (e) {
-        console.log(e);
         return null;
     }
 };
@@ -64,7 +63,6 @@ exports.getCategory = async (name) => {
         }
         return null;
     } catch (e) {
-        console.log(e);
         return null;
     }
 }
@@ -81,7 +79,6 @@ exports.getList = async () => {
         result.total = await allList.countDocuments();
         return result;
     } catch (e) {
-        console.log(e);
         return null;
     }
 }
@@ -96,7 +93,6 @@ exports.getHotItems = async () => {
         });
         return await Promise.all(result);
     } catch (e) {
-        console.log(e);
         return null;
     }
 }

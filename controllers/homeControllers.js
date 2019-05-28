@@ -1,6 +1,8 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
 const userModel = require('../models/user');
+const SHA256 = require('crypto-js/sha256');
+
 const { formatPrice } = require('../global');
 function parseData(raw) {
     const data = { ...raw };
@@ -45,6 +47,16 @@ exports.recoverGet = (req, res) => {
 exports.registerGet = (req, res) => {
     res.render('authen/register', { title: 'Đăng ký' })
 };
+
+exports.registerPost = (req, res) => {
+    const newUser = req.body;
+    newUser.password = SHA256(newUser.password).toString();
+    return userModel.add(newUser, (error) => {
+        if (error)
+            return res.status(500).send(eror);
+        return res.redirect('./login');
+    });
+}
 
 exports.verifyEmail = async (req, res) => {
     const user = await userModel.getEmail(req.body.email);

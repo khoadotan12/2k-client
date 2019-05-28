@@ -1,8 +1,8 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const session = require('express-session');
 const passport = require('./config/passport');
 const flash = require('connect-flash');
@@ -14,15 +14,15 @@ const hbsHelpers = exphbs.create({
   extname: '.hbs'
 });
 
-var indexRouter = require('./routes/index');
-var cartRouter = require('./routes/cart');
-var checkoutRouter = require('./routes/checkout');
-var userRouter = require('./routes/user');
-var orderRouter = require('./routes/order');
-var productRouter = require('./routes/product');
+const indexRouter = require('./routes/index');
+const cartRouter = require('./routes/cart');
+const checkoutRouter = require('./routes/checkout');
+const userRouter = require('./routes/user');
+const orderRouter = require('./routes/order');
+const productRouter = require('./routes/product');
 
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,7 +49,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/cart', cartRouter);
 app.use('/checkout', checkoutRouter);
-app.use('/account', userRouter);
+app.use('/user', userRouter);
 app.use('/order', orderRouter);
 app.use('/product', productRouter);
 

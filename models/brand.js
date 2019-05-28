@@ -15,7 +15,6 @@ exports.queryByName = async (name) => {
         return model;
     }
     catch (e) {
-        console.log(e);
         return null;
     }
 }
@@ -26,7 +25,6 @@ exports.query = async (id) => {
         return model._doc;
     }
     catch (e) {
-        console.log(e);
         return null;
     }
 }
@@ -37,7 +35,6 @@ exports.list = async () => {
         return model;
     }
     catch (e) {
-        console.log(e);
         return null;
     }
 }
@@ -48,7 +45,6 @@ exports.getTopList = async () => {
         return model;
     }
     catch (e) {
-        console.log(e);
         return null;
     }
 }

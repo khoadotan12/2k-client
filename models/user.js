@@ -25,7 +25,6 @@ exports.list = async () => {
         return users;
     }
     catch (e) {
-        console.log(e);
         return null;
     }
 };
@@ -34,7 +33,6 @@ exports.delete = async (id) => {
     try {
         return await userModel.findByIdAndRemove(id);
     } catch (e) {
-        console.log(e);
         return null;
     }
 };
@@ -43,7 +41,6 @@ exports.getID = async (id) => {
     try {
         return await userModel.findById(id);
     } catch (e) {
-        console.log(e);
         return null;
     }
 };
@@ -52,7 +49,6 @@ exports.getEmail = async (email) => {
     try {
         return await userModel.findOne({ email });
     } catch (e) {
-        console.log(e);
         return null;
     }
 }
@@ -61,7 +57,6 @@ exports.edit = async (id, data) => {
     try {
         return await userModel.findByIdAndUpdate(id, data);
     } catch (e) {
-        console.log(e);
         return null;
     }
 };
