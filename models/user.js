@@ -12,11 +12,9 @@ const UserSchema = new Schema({
 });
 const userModel = mongoose.model('users', UserSchema);
 
-exports.add = (user, callback) => {
+exports.add = (user) => {
     const newUser = new userModel(user);
-    return newUser.save(e => {
-        return callback(e);
-    })
+    return newUser.save();
 };
 
 exports.list = async () => {

@@ -4,10 +4,16 @@ exports.formatPrice = (price) => {
 
 exports.perPage = 3;
 
+exports.saltRounds = 10;
+
+exports.brandsSchemaName = 'brands';
+
+exports.emailFail = 'Email đã được sử dụng.';
+
 exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated())
         return next();
-    res.redirect('/login');
+    res.redirect('/user/login');
 }
 
 exports.isUnLoggedIn = (req, res, next) => {

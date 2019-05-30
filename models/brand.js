@@ -7,7 +7,8 @@ const BrandSchema = new Schema({
     sold: Number,
     image: String,
 });
-const brandModel = mongoose.model('brands', BrandSchema);
+const { brandsSchemaName } = require('../global');
+const brandModel = mongoose.model(brandsSchemaName, BrandSchema);
 
 exports.queryByName = async (name) => {
     try {

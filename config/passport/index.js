@@ -1,32 +1,32 @@
 const passport = require('passport');
+const bcrypt = require('bcrypt');
+
 const LocalStrategy = require('passport-local').Strategy;
 const userModel = require('../../models/user');
-const SHA256 = require("crypto-js/sha256");
 
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
     userModel.getID(id).then((user) => {
         done(null, user);
     }).catch(function (err) {
-        console.log(err);
+        done(err, null);
     })
 });
 
 passport.use(new LocalStrategy(
     {
         usernameField: 'email',
-        passwordField: 'password',
         passReqToCallback: true
     },
     (req, username, password, done) => {
-        userModel.getEmail(username).then((user) => {
+        userModel.getEmail(username).then(async (user) => {
             if (!user)
                 return done(null, false, req.flash('loginMessage', 'Email hoặc mật khẩu không hợp lệ.'));
-            const hash = SHA256(password).toString();
-            if (hash === user.password) {
+            const compare = await bcrypt.compare(password, user.password);
+            if (compare) {
                 return done(null, user);
             }
             return done(null, false, req.flash('loginMessage', 'Email hoặc mật khẩu không hợp lệ.'));

@@ -209,14 +209,10 @@ function validateEmail() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				document.getElementById("validateEmailFail").textContent = xhr.responseText;
-				if (xhr.responseText !== "")
-					document.getElementById("registerButton").disabled = true;
-				else
-					document.getElementById("registerButton").disabled = false;
 			}
 		}
 	};
-	xhr.open("POST", URL + "/register/verifyEmail", true);
+	xhr.open("POST", URL + "/user/register/verifyEmail", true);
 	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 	xhr.send(JSON.stringify({ "email": email }));
 }
@@ -235,12 +231,13 @@ function checkPassword() {
 				document.getElementById("registerButton").disabled = true;
 			}
 			else {
-				document.getElementById("validatePasswordFail").textContent = "";
+				document.getElementById("validatePasswordFail").textContent = '';
 				document.getElementById("registerButton").disabled = false;
 			}
 		}
 	}
 	else {
 		document.getElementById("validatePasswordFail").textContent = "";
+		document.getElementById("registerButton").disabled = false;
 	}
 }

@@ -35,39 +35,3 @@ exports.home = async (req, res, next) => {
         user: req.user,
     });
 };
-
-exports.loginGet = (req, res) => {
-    res.render('authen/login', { title: 'Đăng nhập', message: req.flash('loginMessage') })
-};
-
-exports.recoverGet = (req, res) => {
-    res.render('authen/recover', { title: 'Quên mật khẩu' })
-};
-
-exports.registerGet = (req, res) => {
-    res.render('authen/register', { title: 'Đăng ký' })
-};
-
-exports.registerPost = (req, res) => {
-    const newUser = req.body;
-    newUser.password = SHA256(newUser.password).toString();
-    return userModel.add(newUser, (error) => {
-        if (error)
-            return res.status(500).send(eror);
-        return res.redirect('./login');
-    });
-}
-
-exports.verifyEmail = async (req, res) => {
-    const user = await userModel.getEmail(req.body.email);
-    if (user)
-        return res.send("Email đã được sử dụng.");
-    return res.status(200).send();
-}
-
-exports.logout = (req, res) => {
-    req.session.destroy();
-    req.logout();
-    res.clearCookie('connect.sid');
-    res.redirect('/');
-}
