@@ -3,6 +3,7 @@ const router = express.Router();
 
 const productControllers = require('../controllers/productControllers');
 
+
 router.get('/', productControllers.home);
 
 router.get('/list/:page', productControllers.home);

@@ -18,15 +18,17 @@
                         <th scope="col">Tổng tiền</th>
                         <th scope="col">Trạng thái
                             đơn hàng</th>
+                        <th scope="col">Ngày giao hàng</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{#each data}}
                     <tr>
-                        <th scope="row">{{this.id}}</th>
-                        <td>{{this.date}}</td>
-                        <td>{{this.total}}</td>
+                        <th scope="row">{{this._id}}</th>
+                        <td>{{this.create}}</td>
+                        <td>{{this.price}}</td>
                         <td>{{this.status}}</td>
+                        <td>{{this.done}}</td>
                     </tr>
                     {{else}}
                     <tr>
