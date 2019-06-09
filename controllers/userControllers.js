@@ -132,8 +132,7 @@ function sendMail(user, host, next) {
         id: user._id
     };
     const token = jwt.sign(payloadActive, secretSign, { expiresIn: 900 });
-    const port = process.env.PORT || '3000';
-    const url = 'http://' + host + (port === '80' ? '' : (':' + port)) + '/user/active/' + user._id + '/' + token;
+    const url = 'http://' + host + (host === 'localhost' ? '3000' : '') + '/user/active/' + user._id + '/' + token;
     mailOptions.to = user.email;
     mailOptions.html = 'Xin chào ' + user.name + ',<br />Nhấn vào link sau để kích hoạt tài khoản của bạn: ' + url + '<br />Link kích hoạt chỉ tồn tại trong 15 phút, vui lòng kích hoạt lại tài khoản nếu link trên đã hết hiệu lực.';
     transporter.sendMail(mailOptions, error => {
