@@ -54,6 +54,11 @@
                         {{#if user}}
                         <li><a href="/user/edit">Thông tin tài khoản</a></li>
                         <li><a href="/user/changepassword">Đổi mật khẩu</a></li>
+                        {{#if user.active}}
+
+                        {{else}}
+                        <li><a href="/user/active">Kích hoạt tài khoản</a></li>
+                        {{/if}}
                         <li><a href="/user/logout">Đăng xuất</a></li>
                         {{else}}
                         <li><a href="/user/login">Đăng nhập</a></li>

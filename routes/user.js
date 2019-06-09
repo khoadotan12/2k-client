@@ -29,4 +29,8 @@ router.post('/register/verifyEmail', userControllers.verifyEmail);
 
 router.get('/logout', userControllers.logout);
 
+router.get('/active', isLoggedIn, userControllers.sendMail);
+
+router.get('/active/:id/:token', userControllers.active);
+
 module.exports = router;

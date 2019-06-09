@@ -67,4 +67,12 @@ exports.updatePassword = async (id, newPassword) => {
     } catch (e) {
         return null;
     }
-}
+};
+
+exports.active = async (id) => {
+    try {
+        return await userModel.findByIdAndUpdate(id, { active: true });
+    } catch (e) {
+        return null;
+    }
+};

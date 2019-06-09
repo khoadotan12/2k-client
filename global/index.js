@@ -31,3 +31,10 @@ exports.isUnLoggedIn = (req, res, next) => {
 };
 
 exports.secretSession = 'J50@xz1AP47xc60';
+
+exports.secretSign = 'QOtdUf3WbaXC54PGaSWH';
+
+exports.emailInfo = {
+    user: '2k.mobileshop.1512241@gmail.com',
+    pass: 'mobileshop2k'
+}
