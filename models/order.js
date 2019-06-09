@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const userModel = require('./user');
+const { ordersSchemaName } = require('../global');
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -18,8 +20,8 @@ const OrderSchema = new Schema({
     },
     price: Number
 });
-const orderModel = mongoose.model('orders', OrderSchema);
-const userModel = require('./user');
+
+const orderModel = mongoose.model(ordersSchemaName, OrderSchema);
 
 exports.add = (order, callback) => {
     const newOrder = new orderModel(order);

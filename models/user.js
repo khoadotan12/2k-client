@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { usersSchemaName } = require('../global');
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
@@ -11,7 +12,7 @@ const UserSchema = new Schema({
     district: String,
     active: Boolean,
 });
-const userModel = mongoose.model('users', UserSchema);
+const userModel = mongoose.model(usersSchemaName, UserSchema);
 
 exports.add = (user) => {
     const newUser = new userModel(user);
@@ -59,3 +60,11 @@ exports.edit = async (id, data) => {
         return null;
     }
 };
+
+exports.updatePassword = async (id, newPassword) => {
+    try {
+        return await userModel.findByIdAndUpdate(id, { password: newPassword });
+    } catch (e) {
+        return null;
+    }
+}

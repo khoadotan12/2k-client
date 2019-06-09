@@ -19,7 +19,9 @@ router.get('/recover', userControllers.recoverGet);
 
 router.get('/register', userControllers.registerGet);
 
-router.get('/changepassword', userControllers.changePassword);
+router.get('/changepassword', isLoggedIn, userControllers.changePasswordGet);
+
+router.post('/changepassword', isLoggedIn, userControllers.changePasswordPost);
 
 router.post('/register', userControllers.registerPost);
 

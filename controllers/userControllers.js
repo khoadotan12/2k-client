@@ -1,5 +1,6 @@
 
 const userModel = require('../models/user');
+const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const { saltRounds, emailFail } = require('../global');
@@ -68,13 +69,26 @@ exports.logout = (req, res) => {
     res.redirect('/');
 };
 
-exports.changePassword = async (req, res) => {
-    const user = await userModel.getID(req.user);
-    console.log(user);
-    return res.render('account/changePass', { title: 'Đổi mật khẩu', user: req.user })
+exports.changePasswordGet = async (req, res) => {
+    return res.render('account/changePass', { title: 'Đổi mật khẩu', user: req.user });
     // if (user)
     //     return res.send(emailFail);
     // return res.status(200).send();
+}
+
+exports.changePasswordPost = async (req, res, next) => {
+    const user = await userModel.getID(req.user);
+    if (!user)
+        return next(createError(404));
+    const compare = await bcrypt.compare(req.body.old_password, user.password);
+    if (compare) {
+        const plainTextPassword = req.body.password;
+        const newHashPassword = await bcrypt.hash(plainTextPassword, saltRounds);
+        const update = await userModel.updatePassword(user._id, newHashPassword);
+        return res.redirect('/');
+    }
+    else
+        return res.render('account/changePass', { title: 'Đổi mật khẩu', user: req.user, message: 'Mật khẩu cũ không chính xác.' })
 }
 
 const transporter = nodemailer.createTransport({

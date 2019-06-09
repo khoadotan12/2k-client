@@ -223,21 +223,21 @@ function checkPassword() {
 	if (password !== "" && repassword != "") {
 		if (password.length < 6) {
 			document.getElementById("validatePasswordFail").textContent = "Mật khẩu phải có ít nhất 6 ký tự.";
-			document.getElementById("registerButton").disabled = true;
+			document.getElementById("submitButton").disabled = true;
 		}
 		else {
 			if (password !== repassword) {
 				document.getElementById("validatePasswordFail").textContent = "Xác nhận mật khẩu không chính xác.";
-				document.getElementById("registerButton").disabled = true;
+				document.getElementById("submitButton").disabled = true;
 			}
 			else {
 				document.getElementById("validatePasswordFail").textContent = '';
-				document.getElementById("registerButton").disabled = false;
+				document.getElementById("submitButton").disabled = false;
 			}
 		}
 	}
 	else {
 		document.getElementById("validatePasswordFail").textContent = "";
-		document.getElementById("registerButton").disabled = false;
+		document.getElementById("submitButton").disabled = false;
 	}
 }

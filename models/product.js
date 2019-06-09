@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const brandModel = require('./brand');
-const { perPage } = require('../global');
+const { perPage, productsSchemaName } = require('../global');
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -25,7 +25,7 @@ const ProductSchema = new Schema({
         backCamera: String,
     }
 });
-const productModel = mongoose.model('products', ProductSchema);
+const productModel = mongoose.model(productsSchemaName, ProductSchema);
 
 exports.info = async (id) => {
     try {

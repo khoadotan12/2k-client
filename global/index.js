@@ -10,6 +10,12 @@ exports.saltRounds = 10;
 
 exports.brandsSchemaName = 'brands';
 
+exports.usersSchemaName = 'users';
+
+exports.productsSchemaName = 'products';
+
+exports.ordersSchemaName = 'orders';
+
 exports.emailFail = 'Email đã được sử dụng.';
 
 exports.isLoggedIn = (req, res, next) => {

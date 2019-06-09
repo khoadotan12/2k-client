@@ -1,0 +1,60 @@
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 mb-0"><a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong
+                    class="text-black">{{title}}</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mb-5 mb-md-0">
+                <h2 class="h3 mb-3 text-black">{{title}}</h2>
+                <div class="p-3 p-lg-5 border">
+                    <form action="/user/changepassword" method="post">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="old_password" class="text-black">Mật khẩu cũ <span
+                                        class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="old_password" name="old_password" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="password" class="text-black">Mật khẩu mới <span
+                                        class="text-danger">*</span></label>
+                                <input onchange="checkPassword()" type="password" class="form-control" id="password"
+                                    name="password" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="re_password" class="text-black">Xác nhận mật khẩu mới <span
+                                        class="text-danger">*</span></label>
+                                <input onchange="checkPassword()" type="password" class="form-control" id="re_password"
+                                    name="re_password" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm">
+                                <span class="text-danger" id="validatePasswordFail">{{message}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md">
+                                <button type="submit" id="submitButton" class="btn btn-primary btn-lg py-3 btn-block">Đổi mật
+                                    khẩu</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
