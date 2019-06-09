@@ -19,6 +19,8 @@ router.get('/recover', userControllers.recoverGet);
 
 router.get('/register', userControllers.registerGet);
 
+router.get('/changepassword', userControllers.changePassword);
+
 router.post('/register', userControllers.registerPost);
 
 router.post('/register/verifyEmail', userControllers.verifyEmail);

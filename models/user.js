@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     address: String,
     ward: String,
     district: String,
+    active: Boolean,
 });
 const userModel = mongoose.model('users', UserSchema);
 

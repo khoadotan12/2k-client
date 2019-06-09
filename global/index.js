@@ -16,10 +16,12 @@ exports.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated())
         return next();
     res.redirect('/user/login');
-}
+};
 
 exports.isUnLoggedIn = (req, res, next) => {
     if (req.isUnauthenticated())
         return next();
     res.redirect('/');
-}
+};
+
+exports.secretSession = 'J50@xz1AP47xc60';

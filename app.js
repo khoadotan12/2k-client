@@ -21,6 +21,7 @@ const userRouter = require('./routes/user');
 const orderRouter = require('./routes/order');
 const productRouter = require('./routes/product');
 
+const { secretSession } = require('./global');
 
 const app = express();
 
@@ -38,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(flash({ unsafe: true }));
 app.use(session({
-  secret: 'J50@xz1AP47xc60',
+  secret: secretSession,
   saveUninitialized: false,
   resave: false,
 }));
