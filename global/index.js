@@ -32,7 +32,9 @@ exports.isUnLoggedIn = (req, res, next) => {
 
 exports.secretSession = 'J50@xz1AP47xc60';
 
-exports.secretSign = 'QOtdUf3WbaXC54PGaSWH';
+exports.secretKeyVerify = 'QOtdUf3WbaXC54PGaSWH';
+
+exports.secretKeyRecover = 'vEltKSpAbTBlRb8Z31G4';
 
 exports.emailInfo = {
     user: '2k.mobileshop.1512241@gmail.com',

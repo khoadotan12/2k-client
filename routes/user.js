@@ -15,7 +15,9 @@ router.post('/login', passport.authenticate('local', { successRedirect: '/', fai
 
 router.get('/login', isUnLoggedIn, userControllers.loginGet);
 
-router.get('/recover', userControllers.recoverGet);
+router.get('/recover', isUnLoggedIn, userControllers.recoverGet);
+
+router.post('/recover', isUnLoggedIn, userControllers.recoverPost);
 
 router.get('/register', userControllers.registerGet);
 
@@ -32,5 +34,9 @@ router.get('/logout', userControllers.logout);
 router.get('/active', isLoggedIn, userControllers.sendMail);
 
 router.get('/active/:id/:token', userControllers.active);
+
+router.get('/reset/:id/:token', isUnLoggedIn, userControllers.resetGet);
+
+router.post('/reset/:id/:token', isUnLoggedIn, userControllers.resetPost);
 
 module.exports = router;
