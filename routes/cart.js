@@ -6,4 +6,6 @@ const cartControllers = require('../controllers/cartControllers');
 
 router.get('/', cartControllers.index);
 
+router.post('/addCart', cartControllers.addCart);
+
 module.exports = router

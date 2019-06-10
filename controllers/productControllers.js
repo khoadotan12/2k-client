@@ -79,7 +79,7 @@ exports.home = async (req, res, next) => {
     }
     data.ram = ram;
     data.color = color;
-    res.render('product/all', { title: 'Cửa hàng', data });
+    res.render('product/all', { user: req.user, title: 'Cửa hàng', data });
 };
 
 exports.brand = async (req, res, next) => {
@@ -115,7 +115,7 @@ exports.brand = async (req, res, next) => {
         });
     data.ram = ram;
     data.color = color;
-    res.render('product/brand', { title: brandName, data });
+    res.render('product/brand', { user: req.user, title: brandName, data });
 };
 
 exports.info = async (req, res, next) => {
@@ -133,8 +133,7 @@ exports.info = async (req, res, next) => {
             newitem.uri = newitem._id;
             return newitem;
         });
-    console.log(data);
-    res.render('product/info', { title: data.name, data })
+    res.render('product/info', { user: req.user, title: data.name, data })
 };
 
 exports.search = (req, res, next) => {
@@ -149,5 +148,5 @@ exports.search = (req, res, next) => {
     }
     data.brands = brands;
     data.ram = ram;
-    res.render('product/search', { title: 'Tìm kiếm', data });
+    res.render('product/search', { user: req.user, title: 'Tìm kiếm', data });
 };

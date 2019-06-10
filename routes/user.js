@@ -11,7 +11,7 @@ router.get('/edit', isLoggedIn, userControllers.editGet);
 
 router.post('/edit', isLoggedIn, userControllers.editPost);
 
-router.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/user/login', failureFlash: true }));
+router.post('/login', passport.authenticate('local', { failureRedirect: '/user/login', failureFlash: true }), userControllers.loginPost);
 
 router.get('/login', isUnLoggedIn, userControllers.loginGet);
 

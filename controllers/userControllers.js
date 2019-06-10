@@ -19,8 +19,17 @@ exports.editPost = async (req, res) => {
 };
 
 exports.loginGet = (req, res) => {
-    res.render('authen/login', { title: 'Đăng nhập', message: req.flash('loginMessage') })
+    res.render('authen/login', { referer: req.headers.referer, title: 'Đăng nhập', message: req.flash('loginMessage') })
 };
+
+exports.loginPost = (req, res) => {
+    if (req.body.referer && (req.body.referer !== undefined && req.body.referer.slice(-11) !== "/user/login")) {
+        res.redirect(req.body.referer);
+    } else {
+        res.redirect("/");
+    }
+};
+
 
 exports.recoverGet = (req, res) => {
     res.render('authen/recover', { title: 'Quên mật khẩu' })
@@ -38,6 +47,7 @@ exports.recoverPost = async (req, res, next) => {
     const token = jwt.sign(payload, secretKeyRecover, { expiresIn: 900 });
     const url = req.protocol + '://' + host + (host === 'localhost' ? ':3000' : '') + '/user/reset/' + user._id + '/' + token;
     mailOptions.to = user.email;
+    mailOptions.from = '"Phones Shop - Khôi phục mật khẩu" <2k.mobileshop.1512241@gmail.com>';
     mailOptions.subject = 'Đặt lại mật khẩu tài khoản Phones Shop';
     mailOptions.html = 'Xin chào ' + user.name + ',<br />Nhấn vào link sau để đặt lại mật khẩu của bạn: ' + url + '<br />Link thay đổi mật khẩu chỉ tồn tại trong 15 phút, vui lòng sử dụng lại chức năng quên mật khẩu nếu link trên đã hết hiệu lực.';
     transporter.sendMail(mailOptions, error => {
@@ -177,6 +187,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const mailOptions = {
+    from: 'Phones Shop',
     to: 'someone@gmail.com',
     subject: 'Kích hoạt tài khoản Phones Shop của bạn',
     html: ''
@@ -189,6 +200,7 @@ function sendMail(protocol, user, host, next) {
     const token = jwt.sign(payload, secretKeyVerify, { expiresIn: 900 });
     const url = protocol + '://' + host + (host === 'localhost' ? ':3000' : '') + '/user/active/' + user._id + '/' + token;
     mailOptions.to = user.email;
+    mailOptions.from = '"Phones Shop - Kích hoạt tài khoản" <2k.mobileshop.1512241@gmail.com>';
     mailOptions.html = 'Xin chào ' + user.name + ',<br />Nhấn vào link sau để kích hoạt tài khoản của bạn: ' + url + '<br />Link kích hoạt chỉ tồn tại trong 15 phút, vui lòng kích hoạt lại tài khoản nếu link trên đã hết hiệu lực.';
     transporter.sendMail(mailOptions, error => {
         if (error) {

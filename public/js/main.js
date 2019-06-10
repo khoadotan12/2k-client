@@ -241,3 +241,30 @@ function checkPassword() {
 		document.getElementById("submitButton").disabled = false;
 	}
 }
+
+function addAjax() {
+	const id = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+	const radio = document.querySelector('input[name="color"]:checked');
+	if (!radio)
+		return alert('Vui lòng chọn màu sản phẩm.'); 
+	const color = radio.value;
+	const count = parseInt(document.getElementById('count').value);
+	if (count <= 0)
+		return alert('Vui lòng chọn số lượng.');
+	var cartCount = document.getElementById("cartCount");
+	const cart = cartCount.textContent;
+	if (cart === '') {
+		cartCount.classList.add("count");
+		cartCount.textContent = count;
+	}
+	else {
+		const num = parseInt(cart) + count;
+		cartCount.textContent = num.toString();
+	}
+
+	let xhr = new XMLHttpRequest();
+	const URL = window.location.origin;
+	xhr.open("POST", URL + "/cart/addCart", true);
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(JSON.stringify({ "id": id, "color": color, "count": count }));
+}
