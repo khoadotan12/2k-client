@@ -26,6 +26,16 @@ a {
 .text-black {
   color: #000; }
 
+  .empty-cart {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 30px;
+    background-image: url(/images/empty.png);
+    background-size: 200px 200px;
+    background-position: 0 0;
+  }
+
 .site-wrap:before {
   -webkit-transition: .3s all ease-in-out;
   -o-transition: .3s all ease-in-out;

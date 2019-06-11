@@ -4,10 +4,10 @@ const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
-const { saltRounds, emailFail, secretKeyVerify, secretKeyRecover, emailInfo } = require('../global');
+const { saltRounds, emailFail, secretKeyVerify, secretKeyRecover, emailInfo, getCartCount } = require('../global');
 
 exports.editGet = (req, res, next) => {
-    res.render('account/edit', { title: 'Thông tin tài khoản', user: req.user })
+    res.render('account/edit', { cartCount: getCartCount(req), title: 'Thông tin tài khoản', user: req.user })
 };
 
 exports.editPost = async (req, res) => {
@@ -19,7 +19,7 @@ exports.editPost = async (req, res) => {
 };
 
 exports.loginGet = (req, res) => {
-    res.render('authen/login', { referer: req.headers.referer, title: 'Đăng nhập', message: req.flash('loginMessage') })
+    res.render('authen/login', { cartCount: getCartCount(req), referer: req.headers.referer, title: 'Đăng nhập', message: req.flash('loginMessage') })
 };
 
 exports.loginPost = (req, res) => {
@@ -32,7 +32,7 @@ exports.loginPost = (req, res) => {
 
 
 exports.recoverGet = (req, res) => {
-    res.render('authen/recover', { title: 'Quên mật khẩu' })
+    res.render('authen/recover', { cartCount: getCartCount(req), title: 'Quên mật khẩu' })
 };
 
 exports.recoverPost = async (req, res, next) => {
@@ -92,7 +92,7 @@ exports.resetPost = (req, res, next) => {
 };
 
 exports.registerGet = (req, res) => {
-    res.render('authen/register', { title: 'Đăng ký' })
+    res.render('authen/register', { cartCount: getCartCount(req), title: 'Đăng ký' })
 };
 
 exports.registerPost = async (req, res, next) => {
@@ -131,7 +131,7 @@ exports.logout = (req, res) => {
 };
 
 exports.changePasswordGet = async (req, res) => {
-    return res.render('account/changePass', { title: 'Đổi mật khẩu', user: req.user });
+    return res.render('account/changePass', { cartCount: getCartCount(req), title: 'Đổi mật khẩu', user: req.user });
 }
 
 exports.changePasswordPost = async (req, res, next) => {
@@ -175,7 +175,7 @@ exports.active = (req, res) => {
             req.login(user, err => {
                 if (err)
                     return next(err);
-                return res.render('account/done', { user, title: 'Kích hoạt tài khoản thành công', message: 'Tài khoản của bạn đã được kích hoạt.' });
+                return res.render('account/done', { cartCount: getCartCount(req), user, title: 'Kích hoạt tài khoản thành công', message: 'Tài khoản của bạn đã được kích hoạt.' });
             });
         }
     });

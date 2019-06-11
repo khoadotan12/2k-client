@@ -30,6 +30,10 @@ exports.isUnLoggedIn = (req, res, next) => {
     res.redirect('/');
 };
 
+exports.getCartCount = req => {
+    return req.session.cartCount;
+}
+
 exports.secretSession = 'J50@xz1AP47xc60';
 
 exports.secretKeyVerify = 'QOtdUf3WbaXC54PGaSWH';

@@ -1,7 +1,7 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
 const createError = require('http-errors');
-const { formatPrice, URL, perPage } = require('../global');
+const { formatPrice, URL, perPage, getCartCount } = require('../global');
 
 function parseData(raw) {
     const data = { ...raw };
@@ -79,7 +79,9 @@ exports.home = async (req, res, next) => {
     }
     data.ram = ram;
     data.color = color;
-    res.render('product/all', { user: req.user, title: 'Cửa hàng', data });
+
+    const cartCount = getCartCount(req);
+    res.render('product/all', { user: req.user, title: 'Cửa hàng', data, cartCount });
 };
 
 exports.brand = async (req, res, next) => {
@@ -133,7 +135,9 @@ exports.info = async (req, res, next) => {
             newitem.uri = newitem._id;
             return newitem;
         });
-    res.render('product/info', { user: req.user, title: data.name, data })
+
+    const cartCount = getCartCount(req);
+    res.render('product/info', { user: req.user, title: data.name, data, cartCount })
 };
 
 exports.search = (req, res, next) => {
@@ -148,5 +152,7 @@ exports.search = (req, res, next) => {
     }
     data.brands = brands;
     data.ram = ram;
-    res.render('product/search', { user: req.user, title: 'Tìm kiếm', data });
+
+    const cartCount = getCartCount(req);
+    res.render('product/search', { user: req.user, cartCount, title: 'Tìm kiếm', data });
 };

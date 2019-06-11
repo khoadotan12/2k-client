@@ -246,7 +246,7 @@ function addAjax() {
 	const id = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
 	const radio = document.querySelector('input[name="color"]:checked');
 	if (!radio)
-		return alert('Vui lòng chọn màu sản phẩm.'); 
+		return alert('Vui lòng chọn màu sản phẩm.');
 	const color = radio.value;
 	const count = parseInt(document.getElementById('count').value);
 	if (count <= 0)
@@ -267,4 +267,22 @@ function addAjax() {
 	xhr.open("POST", URL + "/cart/addCart", true);
 	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 	xhr.send(JSON.stringify({ "id": id, "color": color, "count": count }));
+}
+
+function deleteItemCart(id, color) {
+	const URL = window.location.origin;
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				location.reload();
+			}
+			else {
+				alert('Lỗi: ', xhr.status);
+			}
+		}
+	};
+	xhr.open("DELETE", URL + "/cart/delete", true);
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(JSON.stringify({ "id": id, "color": color }));
 }

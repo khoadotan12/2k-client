@@ -1,6 +1,6 @@
 const productModel = require('../models/product');
 
-const { formatPrice, URL } = require('../global');
+const { formatPrice, URL, getCartCount } = require('../global');
 
 exports.index = async (req, res, next) => {
     const cart = req.session.products;
@@ -16,30 +16,19 @@ exports.index = async (req, res, next) => {
             return element;
         });
         const data = await Promise.all(arraydata);
-        return res.render('cart/index', { user: req.user, title: 'Giỏ hàng', data, sum: formatPrice(sum) })
+        if (req.isAuthenticated()) {
+            // delete req.session.products;
+            req.session.cart = { data, sum };
+        }
+        return res.render('cart/index', { cartCount: getCartCount(req), user: req.user, title: 'Giỏ hàng', data, sum: formatPrice(sum) })
     }
-    // const price = [4990000, 26590000];
-    // const data = [{
-    //     name: 'Xiaomi Redmi Note 7',
-    //     price: formatPrice(price[0]),
-    //     image: '/images/xiaomi.jpg',
-    //     count: 1,
-    // }, {
-    //     name: 'iPhone XS Max 64 GB',
-    //     price: formatPrice(price[1]),
-    //     image: 'images/iphoneXSMax.png',
-    //     count: 2,
-    // }];
-    // data.forEach((element, index) => {
-    //     element.total = formatPrice(price[index] * element.count);
-    //     sum += (price[index] * element.count);
-    // });
     return res.render('cart/index', { user: req.user, title: 'Giỏ hàng' })
 };
 
 exports.addCart = (req, res, next) => {
     const data = req.body;
     let products = req.session.products ? req.session.products : [];
+    let cartCount = req.session.cartCount ? req.session.cartCount : 0;
     const found = products.find(element => {
         return (element.id === data.id && data.color === element.color);
     });
@@ -47,6 +36,24 @@ exports.addCart = (req, res, next) => {
         found.count += data.count;
     else
         products.push(data);
+    cartCount += data.count;
     req.session.products = products;
+    req.session.cartCount = cartCount;
+    res.status(200).send();
+};
+
+exports.deleteItem = (req, res, next) => {
+    const data = req.body;
+    let products = req.session.products;
+    let cartCount = req.session.cartCount;
+    if (!products)
+        return res.status(400).send('Request không hợp lệ');
+    const filter = products.filter(element => {
+        if (element.id === data.id && data.color === element.color)
+            cartCount -= element.count;
+        return (element.id !== data.id && data.color !== element.color);
+    });
+    req.session.products = filter;
+    req.session.cartCount = cartCount;
     res.status(200).send();
 };

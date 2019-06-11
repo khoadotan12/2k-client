@@ -1,7 +1,7 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
 const userModel = require('../models/user');
-const { formatPrice, URL } = require('../global');
+const { formatPrice, URL, getCartCount} = require('../global');
 
 function parseData(raw) {
     const data = { ...raw };
@@ -30,9 +30,11 @@ exports.home = async (req, res, next) => {
             newitem.uri = '/' + newitem.brand.toLowerCase() + '/' + newitem._id;
             return newitem;
         });
+    const cartCount = getCartCount(req);
     res.render('index', {
         title: 'Trang chủ',
         data,
         user: req.user,
+        cartCount,
     });
 };

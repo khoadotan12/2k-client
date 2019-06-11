@@ -1,5 +1,5 @@
 const orderModel = require('../models/order');
-const { formatPrice } = require('../global');
+const { formatPrice, getCartCount } = require('../global');
 
 exports.home = async (req, res, next) => {
     const id = req.user._id;
@@ -23,5 +23,6 @@ exports.home = async (req, res, next) => {
                 break;
         }
     });
-    res.render('order/history', { title: 'Đơn hàng của bạn', data, user: req.user })
+    const cartCount = getCartCount(req);
+    res.render('order/history', { cartCount, title: 'Đơn hàng của bạn', data, user: req.user })
 };

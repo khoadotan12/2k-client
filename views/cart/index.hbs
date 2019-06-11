@@ -9,8 +9,9 @@
 
 <div class="site-section">
     <div class="container">
+        {{#if data}}
         <div class="row mb-5">
-            <form class="col-md-12" method="post">
+            {{!-- <form class="col-md-12" method="post"> --}}
                 <div class="site-blocks-table">
                     <table class="table table-bordered">
                         <thead>
@@ -40,8 +41,8 @@
                                             <button class="btn btn-outline-primary js-btn-minus"
                                                 type="button">&minus;</button>
                                         </div>
-                                        <input type="text" class="form-control text-center" value={{this.count}} disabled
-                                            placeholder="" aria-label="Example text with button addon"
+                                        <input type="text" class="form-control text-center" value={{this.count}}
+                                            disabled placeholder="" aria-label="Example text with button addon"
                                             aria-describedby="button-addon1">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-primary js-btn-plus"
@@ -51,23 +52,23 @@
 
                                 </td>
                                 <td>{{this.total}}</td>
-                                <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
+                                <td><button onclick="deleteItemCart('{{this.id}}', '{{this.color}}')" class="btn btn-primary btn-sm">X</button></td>
                             </tr>
                             {{/each}}
                         </tbody>
                     </table>
                 </div>
-            </form>
+            {{!-- </form> --}}
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <button class="btn btn-primary btn-sm btn-block">Cập nhật giỏ hàng</button>
+                        <a href="/cart/updateCart" class="btn btn-primary btn-sm btn-block">Cập nhật giỏ hàng</a>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-outline-primary btn-sm btn-block">Tiếp tục mua sắm</button>
+                        <a href="/product" class="btn btn-outline-primary btn-sm btn-block">Tiếp tục mua sắm</a>
                     </div>
                 </div>
                 <div class="row">
@@ -118,5 +119,14 @@
                 </div>
             </div>
         </div>
+        {{else}}
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="empty-cart"></span>
+                <p class="lead mb-5"> Không có sản phẩm nào trong giỏ hàng của bạn.</p>
+                <p><a href="/product" class="btn btn-sm btn-primary">Tiếp tục mua sắm</a></p>
+            </div>
+        </div>
+        {{/if}}
     </div>
 </div>

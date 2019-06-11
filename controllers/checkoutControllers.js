@@ -1,28 +1,16 @@
-function formatPrice(price) {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+const { formatPrice, getCartCount } = require('../global');
 
 exports.home = (req, res, next) => {
-    const price = [4990000, 26590000];
-    const data = [{
-        name: 'Xiaomi Redmi Note 7',
-        price: formatPrice(price[0]),
-        image: '/images/xiaomi.jpg',
-        count: 1,
-    }, {
-        name: 'iPhone XS Max 64 GB',
-        price: formatPrice(price[1]),
-        image: 'images/iphoneXSMax.png',
-        count: 2,
-    }];
-    let sum = 0;
-    data.forEach((element, index) => {
-        element.total = formatPrice(price[index] * element.count);
-        sum += (price[index] * element.count);
-    });
-    res.render('checkout/index', { title: 'Thanh toán', data, sum: formatPrice(sum), user: req.user })
+    if (!req.session.products)
+        return res.redirect('/');
+    res.render('checkout/index', { title: 'Thanh toán', cartCount: getCartCount(req), data: req.session.cart.data, sum: formatPrice(req.session.cart.sum), user: req.user })
 };
 
 exports.done = (req, res, next) => {
-    res.render('checkout/done', { title: 'Đặt hàng thành công' })
+    if (!req.session.products)
+        return res.redirect('/');
+    delete req.session.products;
+    delete req.session.cartCount;
+    delete req.session.cart;
+    res.render('checkout/done', { user: req.user, title: 'Đặt hàng thành công' })
 }
