@@ -203,7 +203,6 @@ jQuery(document).ready(function ($) {
 
 function validateEmail() {
 	const email = document.getElementById("email").value;
-	const URL = window.location.origin;
 	let xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4) {
@@ -212,7 +211,7 @@ function validateEmail() {
 			}
 		}
 	};
-	xhr.open("POST", URL + "/user/register/verifyEmail", true);
+	xhr.open("POST", "/user/register/verifyEmail", true);
 	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 	xhr.send(JSON.stringify({ "email": email }));
 }
@@ -263,14 +262,12 @@ function addAjax() {
 	}
 
 	let xhr = new XMLHttpRequest();
-	const URL = window.location.origin;
-	xhr.open("POST", URL + "/cart/addCart", true);
+	xhr.open("POST", "/cart/addCart", true);
 	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 	xhr.send(JSON.stringify({ "id": id, "color": color, "count": count }));
 }
 
 function deleteItemCart(id, color) {
-	const URL = window.location.origin;
 	let xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4) {
@@ -282,7 +279,29 @@ function deleteItemCart(id, color) {
 			}
 		}
 	};
-	xhr.open("DELETE", URL + "/cart/delete", true);
+	xhr.open("DELETE", "/cart/delete", true);
 	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 	xhr.send(JSON.stringify({ "id": id, "color": color }));
+}
+
+function updateCart() {
+	const count = document.getElementsByName("numOfItems[]");
+	let values = [];
+	for (let i = 0; i < count.length; i++) {
+		values.push(parseInt(count[i].value));
+	}
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				location.reload();
+			}
+			else {
+				alert('Lỗi: ', xhr.status);
+			}
+		}
+	};
+	xhr.open("POST", "/cart/updateCart", true);
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(JSON.stringify({ "values": values }));
 }

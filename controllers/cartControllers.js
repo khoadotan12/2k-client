@@ -1,4 +1,5 @@
 const productModel = require('../models/product');
+const brandModel = require('../models/brand');
 
 const { formatPrice, URL, getCartCount } = require('../global');
 
@@ -8,10 +9,13 @@ exports.index = async (req, res, next) => {
     if (cart) {
         const arraydata = cart.map(async (element) => {
             const product = await productModel.info(element.id);
+            const brand = await brandModel.query(product.brand);
             element.price = formatPrice(product.price);
             element.total = formatPrice(product.price * element.count);
             element.name = product.name;
             element.image = URL + product.image;
+            if (brand)
+                element.uri = '/product/' + brand.name.toLowerCase() + '/' + element.id;
             sum += product.price * element.count;
             return element;
         });
@@ -42,7 +46,7 @@ exports.addCart = (req, res, next) => {
     res.status(200).send();
 };
 
-exports.deleteItem = (req, res, next) => {
+exports.deleteItem = (req, res) => {
     const data = req.body;
     let products = req.session.products;
     let cartCount = req.session.cartCount;
@@ -51,9 +55,33 @@ exports.deleteItem = (req, res, next) => {
     const filter = products.filter(element => {
         if (element.id === data.id && data.color === element.color)
             cartCount -= element.count;
-        return (element.id !== data.id && data.color !== element.color);
+        return (element.id !== data.id || data.color !== element.color);
     });
     req.session.products = filter;
     req.session.cartCount = cartCount;
     res.status(200).send();
+};
+
+exports.updateCart = (req, res) => {
+    const values = req.body.values;
+    if (!values)
+        return res.status(400).send('Request không hợp lệ');
+    if (!values.length)
+        return res.status(400).send('Request không hợp lệ');
+    let products = req.session.products;
+    let cartCount = 0;
+    if (!products)
+        return res.status(400).send('Request không hợp lệ');
+    const newProducts = products.map((element, index) => {
+        if (values[index] !== undefined || values[index] !== null) {
+            element.count = values[index];
+            cartCount += values[index];
+        }
+        else
+            cartCount += element.count;
+        return element;
+    }).filter(element => element.count > 0);
+    req.session.products = newProducts.filter(element => element.count > 0);
+    req.session.cartCount = cartCount;
+    return res.status(200).send();
 };
