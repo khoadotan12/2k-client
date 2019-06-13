@@ -25,11 +25,11 @@ router.get('/changepassword', isLoggedIn, userControllers.changePasswordGet);
 
 router.post('/changepassword', isLoggedIn, userControllers.changePasswordPost);
 
-router.post('/register', userControllers.registerPost);
+router.post('/register', isUnLoggedIn, userControllers.registerPost);
 
 router.post('/register/verifyEmail', userControllers.verifyEmail);
 
-router.get('/logout', userControllers.logout);
+router.get('/logout', isLoggedIn, userControllers.logout);
 
 router.get('/active', isLoggedIn, userControllers.sendMail);
 
