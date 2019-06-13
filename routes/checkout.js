@@ -7,6 +7,8 @@ const { isLoggedIn } = require('../global');
 
 router.get('/', isLoggedIn, checkoutControllers.home);
 
-router.get('/done', isLoggedIn, checkoutControllers.done);
+router.post('/', isLoggedIn, checkoutControllers.submitOrder);
+
+// router.get('/done', isLoggedIn, checkoutControllers.done);
 
 module.exports = router;

@@ -39,15 +39,8 @@ exports.info = async (id) => {
 exports.getPage = async (page) => {
     try {
         const products = await productModel.find().skip((page - 1) * perPage).limit(perPage);
-        // const result = products.map(async (product) => {
-        //     const brand = await brandModel.query(product.brand);
-        //     product._doc.brand = brand ? brand.name : 'Hãng khác';
-        //     return product._doc;
-        // });
-        // return await Promise.all(result);
         return products;
     } catch (e) {
-        console.log(e);
         return null;
     }
 }
@@ -59,7 +52,7 @@ exports.getCategory = async (name) => {
         const result = await products.limit(10);
         if (result) {
             const total = await products.countDocuments();
-            return { total, data: result};
+            return { total, data: result };
         }
         return null;
     } catch (e) {
@@ -101,7 +94,20 @@ exports.getRelatedProducts = async (brand, id) => {
     try {
         return await productModel.find({ brand }).where('_id').ne(id).limit(10);
     } catch (e) {
-        console.log(e);
+        return null;
+    }
+}
+
+exports.increaseSold = async (id, sold) => {
+    try {
+        const product = await productModel.findById(id);
+        if (product) {
+            const newSold = product.sold ? (product.sold + sold) : sold; 
+            return await productModel.findByIdAndUpdate(id, { sold: newSold });
+        }
+        else
+            return null;
+    } catch (e) {
         return null;
     }
 }

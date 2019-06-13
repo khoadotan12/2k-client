@@ -7,7 +7,6 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const OrderSchema = new Schema({
     userID: ObjectId,
     create: Date,
-    done: Date,
     status: Number,
     address: String,
     ward: String,
@@ -15,10 +14,12 @@ const OrderSchema = new Schema({
     items: {
         type: [{
             productID: ObjectId,
+            color: String,
             count: Number,
         }]
     },
-    price: Number
+    price: Number,
+    notes: String,
 });
 
 const orderModel = mongoose.model(ordersSchemaName, OrderSchema);
@@ -52,14 +53,6 @@ exports.list = async (userID) => {
 exports.getID = async (id) => {
     try {
         return await orderModel.findById(id);
-    } catch (e) {
-        return null;
-    }
-};
-
-exports.edit = async (id, data) => {
-    try {
-        return await orderModel.findByIdAndUpdate(id, data);
     } catch (e) {
         return null;
     }

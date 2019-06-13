@@ -20,52 +20,60 @@
         <div class="row">
             <div class="col-md-6 mb-5 mb-md-0">
                 <h2 class="h3 mb-3 text-black">Thông tin giao hàng</h2>
-                <div class="p-3 p-lg-5 border">
-                    <div class="form-group row">
-                        <div class="col-sm">
-                            <label for="phone" class="text-black">Số điện thoại <span
-                                    class="text-danger">*</span></label>
-                            <input type="number" class="form-control" value="{{user.phone}}" id="phone" name="phone" required>
+                <form id="myform" method="POST">
+                    <div class="p-3 p-lg-5 border">
+                        {{!-- <div class="form-group row">
+                            <div class="col-sm">
+                                <label for="phone" class="text-black">Số điện thoại <span
+                                        class="text-danger">*</span></label>
+                                <input type="number" class="form-control" value="{{user.phone}}" id="phone" name="phone"
+                                    required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm">
-                            <label for="name" class="text-black">Họ và tên <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{user.name}}" id="name" name="name" required>
+                        <div class="form-group row">
+                            <div class="col-sm">
+                                <label for="name" class="text-black">Họ và tên <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{user.name}}" id="name" name="name"
+                                    required>
+                            </div>
+                        </div> --}}
+
+                        <div class="form-group row">
+                            <div class="col-sm">
+                                <label for="address" class="text-black">Địa chỉ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                    placeholder="Địa chỉ và tên đường" value="{{user.address}}" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm">
-                            <label for="address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="address" name="address"
-                                placeholder="Địa chỉ và tên đường" value="{{user.address}}" required>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="ward" class="text-black">Phường <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{user.ward}}" id="ward" name="ward"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="district" class="text-black">Quận <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{user.district}}" id="district"
+                                    name="district" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <label for="ward" class="text-black">Phường <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{user.ward}}" id="ward" name="ward" required>
+                        <div class="form-group">
+                            <label for="notes" class="text-black">Ghi chú</label>
+                            <textarea name="notes" id="notes" cols="30" rows="5" class="form-control"
+                                placeholder="Ghi chú cho đơn hàng"></textarea>
                         </div>
-                        <div class="col-md-6">
-                            <label for="district" class="text-black">Quận <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{user.district}}" id="district" name="district" required>
-                        </div>
-                    </div>                    
+                </form>
 
-                    <div class="form-group">
-                        <label for="notes" class="text-black">Ghi chú</label>
-                        <textarea name="notes" id="notes" cols="30" rows="5" class="form-control"
-                            placeholder="Ghi chú cho đơn hàng"></textarea>
-                    </div>
-
-                </div>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
 
-                {{!-- <div class="row mb-5">
+            {{!-- <div class="row mb-5">
                     <div class="col-md-12">
                         <h2 class="h3 mb-3 text-black">Mã giảm giá</h2>
                         <div class="p-3 p-lg-5 border">
@@ -84,44 +92,44 @@
                     </div>
                 </div> --}}
 
-                <div class="row mb-5">
-                    <div class="col-md-12">
-                        <h2 class="h3 mb-3 text-black">Đơn hàng</h2>
-                        <div class="p-3 p-lg-5 border">
-                            <table class="table site-block-order-table mb-5">
-                                <thead>
-                                    <th>Sản phẩm</th>
-                                    <th>Tổng tiền</th>
-                                </thead>
-                                <tbody>
-                                    {{#each data}}
-                                    <tr>
-                                        <td>{{this.name}} <strong class="mx-2">x</strong> {{this.count}}</td>
-                                        <td>{{this.total}}</td>
-                                    </tr>
-                                    {{/each}}
-                                    <tr>
-                                        <td class="text-black font-weight-bold">Tổng tạm tính</td>
-                                        <td class="text-black font-weight-bold">{{sum}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-black font-weight-bold">Tổng cộng</td>
-                                        <td class="text-black font-weight-bold">{{sum}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <h2 class="h3 mb-3 text-black">Đơn hàng</h2>
+                    <div class="p-3 p-lg-5 border">
+                        <table class="table site-block-order-table mb-5">
+                            <thead>
+                                <th>Sản phẩm</th>
+                                <th>Tổng tiền</th>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
+                                <tr>
+                                    <td>{{this.name}} <strong class="mx-2">x</strong> {{this.count}}</td>
+                                    <td>{{this.total}}</td>
+                                </tr>
+                                {{/each}}
+                                <tr>
+                                    <td class="text-black font-weight-bold">Tổng tạm tính</td>
+                                    <td class="text-black font-weight-bold">{{sum}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-black font-weight-bold">Tổng cộng</td>
+                                    <td class="text-black font-weight-bold">{{sum}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            <div class="form-group">
-                                <button class="btn btn-primary btn-lg py-3 btn-block"
-                                    onclick="window.location='/checkout/done'">Đặt hàng</button>
-                            </div>
-
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-lg py-3 btn-block"
+                                form="myform">Đặt hàng</button>
                         </div>
+
                     </div>
                 </div>
-
             </div>
+
         </div>
-        <!-- </form> -->
     </div>
+    <!-- </form> -->
+</div>
 </div>
