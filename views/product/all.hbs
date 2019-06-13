@@ -74,7 +74,7 @@
                                 {{#ifCond ../data.page this}}
                                 <li class="active"><span>{{this}}</span></li>
                                 {{else}}
-                                <li><a href="/product/list/{{this}}">{{this}}</a></li>
+                                <li><a href="#" onclick="selectPage({{this}})">{{this}}</a></li>
                                 {{/ifCond}}
                                 {{/for}}                                
                             </ul>
@@ -95,7 +95,7 @@
                     </ul>
                 </div>
 
-                <div class="border p-4 rounded mb-4">
+                {{!-- <div class="border p-4 rounded mb-4">
                     <div class="mb-4">
                         <h3 class="mb-3 h6 text-uppercase text-black d-block">Giá tiền</h3>
                         <div id="slider-range" class="border-primary"></div>
@@ -134,6 +134,6 @@
                         </a>
                     </div>
 
-                </div>
+                </div> --}}
             </div>
         </div>

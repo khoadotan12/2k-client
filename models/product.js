@@ -45,14 +45,12 @@ exports.getPage = async (page) => {
     }
 }
 
-exports.getCategory = async (name) => {
+exports.getCategory = async (name, page) => {
     try {
         const brand = await brandModel.queryByName(name);
-        const products = productModel.find({ brand: brand._id });
-        const result = await products.limit(10);
+        const result = productModel.find({ brand: brand._id }).skip((page - 1) * perPage).limit(perPage);;
         if (result) {
-            const total = await products.countDocuments();
-            return { total, data: result };
+            return result;
         }
         return null;
     } catch (e) {
@@ -102,11 +100,22 @@ exports.increaseSold = async (id, sold) => {
     try {
         const product = await productModel.findById(id);
         if (product) {
-            const newSold = product.sold ? (product.sold + sold) : sold; 
+            const newSold = product.sold ? (product.sold + sold) : sold;
             return await productModel.findByIdAndUpdate(id, { sold: newSold });
         }
         else
             return null;
+    } catch (e) {
+        return null;
+    }
+}
+
+exports.searchName = async (name, page) => {
+    try {
+        const product = productModel.find({ name: { $regex: name, $options: 'i' } });
+        const total = await product.countDocuments();
+        const result = await productModel.find({ name: { $regex: name, $options: 'i' } }).skip((page - 1) * perPage).limit(perPage);
+        return { result, total };
     } catch (e) {
         return null;
     }

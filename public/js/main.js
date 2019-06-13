@@ -305,3 +305,9 @@ function updateCart() {
 	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 	xhr.send(JSON.stringify({ "values": values }));
 }
+
+function selectPage(page) {
+	let url = new URL(window.location);
+	url.searchParams.set('p', page);
+	window.location = url;
+}

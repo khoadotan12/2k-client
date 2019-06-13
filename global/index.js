@@ -2,7 +2,7 @@ exports.formatPrice = (price) => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-exports.perPage = 3;
+exports.perPage = 6;
 
 exports.URL = "https://admin-2k.herokuapp.com";
 
