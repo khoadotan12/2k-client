@@ -1,7 +1,7 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
 
-const { formatPrice, URL, getCartCount } = require('../global');
+const { formatPrice, getCartCount } = require('../global');
 
 exports.index = async (req, res, next) => {
     const cart = req.session.products;
@@ -13,7 +13,7 @@ exports.index = async (req, res, next) => {
             element.price = formatPrice(product.price);
             element.total = formatPrice(product.price * element.count);
             element.name = product.name;
-            element.image = URL + product.image;
+            element.image = product.image;
             if (brand)
                 element.uri = '/product/' + brand.name.toLowerCase() + '/' + element.id;
             sum += product.price * element.count;

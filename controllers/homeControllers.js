@@ -1,12 +1,11 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
-const userModel = require('../models/user');
-const { formatPrice, URL, getCartCount} = require('../global');
+const { formatPrice, getCartCount} = require('../global');
 
 function parseData(raw) {
     const data = { ...raw };
     data.price = formatPrice(raw.price);
-    data.image = URL + data.image;
+    data.image = data.image;
     return data;
 }
 exports.home = async (req, res, next) => {
@@ -20,7 +19,7 @@ exports.home = async (req, res, next) => {
         rawTopBrands.forEach((item, index) => {
             item.delay = index * 100;
             item.uri = '/product/' + item.name.toLowerCase();
-            item.image = URL + item.image;
+            item.image = item.image;
         });
         data.topBrand = rawTopBrands;
     }

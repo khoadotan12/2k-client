@@ -1,7 +1,7 @@
 const productModel = require('../models/product');
 const brandModel = require('../models/brand');
 const createError = require('http-errors');
-const { formatPrice, URL, perPage, getCartCount } = require('../global');
+const { formatPrice, perPage, getCartCount } = require('../global');
 
 function parseData(raw) {
     const data = { ...raw };
@@ -17,7 +17,7 @@ function parseData(raw) {
     shortInfo.push('ROM: ' + data.info.ROM);
     shortInfo.push('Chip xử lý: ' + data.info.CPU);
     data.shortInfo = [...shortInfo];
-    data.image = URL + data.image;
+    data.image = data.image;
     return data;
 }
 exports.home = async (req, res, next) => {
