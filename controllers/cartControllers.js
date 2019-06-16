@@ -31,6 +31,10 @@ exports.index = async (req, res, next) => {
 
 exports.addCart = (req, res, next) => {
     const data = req.body;
+    if (data.count <= 0)
+        return res.status(400).send('Số lượng sản phẩm không hợp lệ.');
+    if (data.count > 10)
+        return res.status(400).send('Bạn chỉ được đặt tối đa là 10 sản phẩm.');
     let products = req.session.products ? req.session.products : [];
     let cartCount = req.session.cartCount ? req.session.cartCount : 0;
     const found = products.find(element => {

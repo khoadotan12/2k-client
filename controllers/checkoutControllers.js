@@ -6,7 +6,9 @@ const { formatPrice, getCartCount } = require('../global');
 exports.home = (req, res) => {
     if (!req.session.products)
         return res.redirect('/');
-    res.render('checkout/index', { title: 'Thanh toán', cartCount: getCartCount(req), data: req.session.cart.data, sum: formatPrice(req.session.cart.sum), user: req.user })
+    if (!req.user.active)
+        return res.render('authen/disableuser', { title: 'Lỗi tài khoản', message: 'Tài khoản của bạn chưa được kích hoạt. Vui lòng kích hoạt tài khoản của bạn để đặt hàng.', cartCount: getCartCount(req), user: req.user});
+    res.render('checkout/index', { title: 'Thanh toán', cartCount: getCartCount(req), data: req.session.cart.data, sum: formatPrice(req.session.cart.sum), user: req.user });
 };
 
 // exports.done = (req, res) => {
