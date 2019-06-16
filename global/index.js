@@ -4,8 +4,6 @@ exports.formatPrice = (price) => {
 
 exports.perPage = 6;
 
-exports.URL = "https://admin-2k.herokuapp.com";
-
 exports.saltRounds = 10;
 
 exports.brandsSchemaName = 'brands';
